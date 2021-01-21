@@ -1,0 +1,13 @@
+.react-tel-input .form-control {
+    width: inherit !important;
+}
+
+.width-text-field {
+    width: 50% !important;
+}
+
+@media (max-width: 576px) {
+    .width-text-field {
+        width: 100% !important;
+    }
+}
