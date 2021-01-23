@@ -8,21 +8,27 @@ import Typography from '@material-ui/core/Typography';
 import { TextField } from '@material-ui/core';
 import firebase from '../../firebase/firebase';
 import { useHistory } from "react-router-dom";
-
+import UpdateProfileData from '../data/UpdateProfile';
+import TextFieldComponent from '../reusable/TextFieldComponent';
+import SnackbarComponent from '../reusable/SnackbarComponent';
 
 function UpdateProfile({phone}) {
     const [state,setState] = useState({
         firstName: '',
         lastName: '',
         email: '',
-        courses: []
+        courses: [],
+        open: false,
+        message: ''
     });
-    let history = useHistory();
 
+    let history = useHistory();
     useEffect(() => {
         setState({
             ...state,
-            courses: Courses
+            courses: Courses,
+            open: true,
+            message: 'Update your details'
         })
     }, []);
 
@@ -49,19 +55,26 @@ function UpdateProfile({phone}) {
     const handleSubmit = ($event) => {
         $event.preventDefault();
         console.log('UPDATE FORM SUBMITTED');
-        console.log(state);
+
+        
+        setState({
+            ...state,
+            open: true,
+            message: 'Profile Details Updated'
+        });
 
         const db = firebase.firestore();
         // INSERT DATA INTO FIRESTORE
-        const studentRef = db.collection('students')
-                            .doc(phone)
-                            .set({
-                                firstName: state.firstName,
-                                lastName: state.lastName,
-                                email: state.email,
-                                phone: phone
-                            });
+        const students = db.collection('students')
+                .doc(phone)
+                .set({
+                    firstName: state.firstName,
+                    lastName: state.lastName,
+                    email: state.email,
+                    phone: phone
+                });
 
+        
         history.push('/');
     }
 
@@ -74,11 +87,41 @@ function UpdateProfile({phone}) {
                 />
     ));
 
+    const getInputFields = UpdateProfileData.map((data,val) => (
+        <TextFieldComponent
+            key={val}
+            name={data.name}
+            type={data.type}
+            label={data.label}
+            placeholder={data.placeholder}
+            className={data.className}
+            handleChange={handleChange}
+        />
+    ));
+
+    const handleClose = () => {
+        setState({
+            ...state,
+            open: false,
+            message:''
+        });
+    }
+
     return (
         <div className="col-lg-8 col-md-10
             col-sm-12 col-12 
             offset-lg-2 offset-md-1
             mt-0 mt-md-2">
+                
+            {/* SNACKBAR */}
+            <SnackbarComponent 
+                open={state.open} 
+                handleClose={handleClose}
+                message={state.message}
+                />
+            {/* END OF SNACKBAR */}
+
+
             <Card className="text-center p-0 p-md-5 shadow">
                     <CardContent className="w-100">
                         <Typography variant="h4" component="h2" className="mt-2">
@@ -86,54 +129,15 @@ function UpdateProfile({phone}) {
                         </Typography>
                     
                         <form onSubmit={handleSubmit} className="mt-5">
-                            {/* NAME */}
-                                <TextField 
-                                        required
-                                        name="firstName"
-                                        type="text"
-                                        label="First Name"
-                                        variant="outlined" 
-                                        color="primary"
-                                        placeholder="First Name"
-                                        className="width-text-field pr-1 text-center mb-4"
-                                        onInput={handleChange}
-                                        value={state.phone}
-                                        >
-                                </TextField>
-                                <TextField 
-                                    required
-                                    name="lastName"
-                                    type="text"
-                                    label="Last Name"
-                                    variant="outlined" 
-                                    color="primary"
-                                    placeholder="Last Name"
-                                    className="width-text-field pl-1 text-center mb-4"
-                                    onInput={handleChange}
-                                    value={state.phone}
-                                    >
-                                </TextField>
-                                    
-                            {/* EMAIL  */}
-                            <TextField 
-                                    required
-                                    name="email"
-                                    type="email"
-                                    label="Email"
-                                    variant="outlined" 
-                                    color="primary"
-                                    placeholder="Email"
-                                    className="w-100 text-center p-0 mb-3"
-                                    onInput={handleChange}
-                                    value={state.email}
-                                    >
-                            </TextField>
-                                <br />
-                            {/* END OF EMAIL */}
-                            {/* CHECBOXES */}
-                            { getCourseCheckboxes }
-                            {/* END OF CHECKBOXES */}
-                            <br/>
+                            
+
+                                { getInputFields }
+
+                                <br/>
+                                {/* CHECBOXES */}
+                                { getCourseCheckboxes }
+                                {/* END OF CHECKBOXES */}
+                                <br/>
                                 <Button 
                                     type="submit"
                                     color="primary"

@@ -10,6 +10,8 @@ import firebase from '../../firebase/firebase';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import './Auth.css';
+import SnackbarComponent from '../reusable/SnackbarComponent';
+import Spinner from '../reusable/Spinner';
 
 function Auth(props) {
     const [state,setState] = useState({
@@ -17,6 +19,9 @@ function Auth(props) {
         phone: '',
         OTP: '',
         updateDetails: false,
+        loading: false,
+        open: false,
+        message: ''
     });
 
     window.recaptchaWrapperRef = null;
@@ -40,37 +45,74 @@ function Auth(props) {
     }
 
     const handleSubmit = () => {
+            setState({
+                ...state,
+                loading: true
+            })
             firebase.auth().signInWithPhoneNumber(`+${state.phone}`, window.appVerifier)
             .then(function (confirmCode) {
                 let OTP = window.prompt('Enter the OTP you received','');
                 if(OTP != null){
                     confirmCode.confirm(OTP)
-                    .then(res => {
+                    .then(async res => {
                         setState({
                             ...state,
-                            updateDetails: res.additionalUserInfo.isNewUser
+                            updateDetails: res.additionalUserInfo.isNewUser,
+                            loading: false
                         }); 
-                        
+
                         if(!res.additionalUserInfo.isNewUser){
-                            props.history.push('/');
+                            let db = firebase.firestore();
+                            let data = await db.collection('students').doc(`+${state.phone}`).get();
+                            console.log(data.data());
+                            if(data.data() == undefined) {
+                                setState({
+                                    ...state,
+                                    updateDetails: true
+                                }); 
+                            } else {
+                                props.history.push('/');
+                            }
                         }
                         window.appVerifier.reset();
                     })
                     .catch(err => {
+                        console.log(err);
+                        setState({
+                            ...state,
+                            loading: false,
+                            open: true,
+                            message: err.message
+                        })
                         window.appVerifier.reset();
                         console.log(err);
                     })
                 }
             })
             .catch(function (error) {
+                setState({
+                    ...state,
+                    loading: false,
+                    open: true,
+                    message: error.message
+                })
                 console.log(error);
             });           
+    }
+
+    const handleClose = () => {
+        setState({
+            ...state,
+            open: false,
+            message: ''
+        })
     }
 
     return (
         // AUTH FORM
         <div className="container mt-0 mt-md-5  text-center">
             <div className="row mt-0 mt-md-5 pt-5 mb-5">
+            <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose} />
             {state.updateDetails == false ? 
                 <div 
                     className="
@@ -107,14 +149,16 @@ function Auth(props) {
                             </div>
                             {/* END OF PHONE NUMBER */}
 
-                            <Button 
-                                type="submit"
-                                color="primary"
-                                variant="contained"
-                                className="mt-4 w-75 py-2">
-                                    GET OTP
-                            </Button>
-                            </form>
+                            { state.loading == false ?
+                                <Button 
+                                    type="submit"
+                                    color="primary"
+                                    variant="contained"
+                                    className="mt-4 w-75 py-2">
+                                        GET OTP
+                                </Button> : <Spinner />
+                            }
+                           </form>
                     </CardContent>
                     </Card>
                 </div>
