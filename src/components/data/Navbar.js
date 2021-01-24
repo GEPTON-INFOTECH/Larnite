@@ -1,18 +1,14 @@
 export const NavItems = [
     {
-        title: 'Home',
+        title: 'Dashboard',
         link: '/'
     },
     {
-        title: 'Features',
+        title: 'Courses',
         link: '#'
     },
     {
-        title: 'Github',
-        link: '#'
-    },
-    {
-        title: 'Contact',
-        link: '#'
+        title: 'Payments',
+        link: '/profile'
     }
 ]

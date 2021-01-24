@@ -30,7 +30,7 @@ export const updateProfile =  (state,phone) => {
         // INSERT DATA INTO FIRESTORE
         await db.collection('students')
                 .doc(phone)
-                .set({
+                .update({
                     firstName: state.firstName,
                     lastName: state.lastName,
                     email: state.email,
@@ -42,6 +42,29 @@ export const updateProfile =  (state,phone) => {
         let student = await db.collection('students').doc(phone).get();
 
         dispatch(updateProfileMessage('Profile Update Successful'));
+        
+        localStorage.setItem('User',JSON.stringify(student.data()));
+        localStorage.setItem('Exp',Date.now() + 60*60*24*1000);
+    
+        dispatch(loginUserAuth(student.data(),false));
+    }
+}
+
+export const updateBio = (bio,phone) => {
+    return async dispatch => {
+        dispatch(updateProfileRequest())
+        const db = firebase.firestore();
+        // INSERT DATA INTO FIRESTORE
+        await db.collection('students')
+                .doc(phone)
+                .update({
+                    bio: bio
+                });
+
+
+        let student = await db.collection('students').doc(phone).get();
+
+        dispatch(updateProfileMessage('Bio Updated Successfully'));
         
         localStorage.setItem('User',JSON.stringify(student.data()));
         localStorage.setItem('Exp',Date.now() + 60*60*24*1000);
@@ -84,6 +107,7 @@ export const fetchUser = (phone) => {
         }
     }
 }
+
 
 export const closeSnack = () => {
     return {

@@ -8,7 +8,7 @@ import Chip from '@material-ui/core/Chip';
 import { FormControl } from '@material-ui/core';
 
 
-function MultipleSelect({ courses,handleCourseChange }) {
+function MultipleSelect({ courses,handleCourseChange,disabled = false }) {
     const [state,setState] = useState({
         courses: []
     });
@@ -50,6 +50,7 @@ function MultipleSelect({ courses,handleCourseChange }) {
             id="demo-mutiple-chip"
             multiple
             value={courses}
+            disabled={disabled}
             onChange={handleCourseChange}
             input={<Input id="select-multiple-chip" />}
             renderValue={(selected) => (

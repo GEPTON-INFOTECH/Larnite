@@ -100,7 +100,7 @@
 
 .nav-link {
     color: #212121 !important;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 200ms linear;
 }
 
@@ -109,13 +109,22 @@
 }
 
 .nav-item.active .nav-link {
-    color: #777 !important;
+    color: #8167a9 !important;
+}
+
+.my-profile span a {
+    padding-top: 10px !important;
+}
+
+.name-color {
+    color: #502099 !important;
 }
 
 .nav-link {
     position: relative;
     padding: 5px 0 !important;
     display: inline-block;
+    font-size: larger;
 }
 
 .nav-item:after {

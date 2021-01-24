@@ -6,7 +6,8 @@ import { Link, useHistory } from 'react-router-dom';
 import SnackbarComponent from '../../reusable/SnackbarComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSnackbar, logout } from '../../../redux/auth/Actions';
-
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 function Navbar() {
     const state = useSelector(state => state.uReducer);
@@ -22,7 +23,7 @@ function Navbar() {
 
     return (
         <div className="Navbar shadow p-3">
-            <nav className="navbar navbar-expand-md navbar-light container sticky-top">
+            <nav className="navbar navbar-expand-md navbar-light sticky-top">
                     {/* NAVBAR LOGO */}
                     <a className="navbar-brand" href="https://front.codes/" target="_blank">
                         NavIcon
@@ -34,15 +35,10 @@ function Navbar() {
                     </button>
                     {/* END OF TOGGLER BUTTON */}
                     <div className="collapse navbar-collapse text-left text-md-center" id="navbarSupportedContent">
-                        <ul className="navbar-nav ml-auto py-4 text-left text-md-center py-md-0">
+                        <ul className="navbar-nav mx-auto py-4 text-left text-md-center py-md-0">
                             { NavItemHTML }
-                            { 
-                                state.isLoggedIn == false ? '':
-                                <li className="nav-item pl-4 pl-md-0 ml-0 mx-md-3 " >
-                                    <Link className="nav-link" to='/profile'>My Profile</Link>
-                                </li>
-                            }
                         </ul>
+                       
                         
                         {/* BUTTON FOR SIGIN */}
                         { state.isLoggedIn == false ? 
@@ -52,9 +48,16 @@ function Navbar() {
                                 </Button>
                             </Link> 
                             :
-                            <Button color="primary" variant="contained" onClick={() => dispatch(logout(history))} className="ml-0 ml-md-2 px-5 login-button text-left text-md-center ">
-                                Logout
-                            </Button>
+                            <div className="my-auto my-profile">
+                                {
+                                    state.isLoggedIn == false ? '':
+                                    <span className="my-auto py-auto">
+                                        <Link className="nav-link my-auto py-auto" to='/profile'>
+                                            <h6>Welcome <span className="name-color">{ state.user.firstName }</span></h6>
+                                        </Link>
+                                    </span>
+                                }
+                            </div>
                         }
                         {/* END OF SIGN IN BUTTON */}
                     </div>

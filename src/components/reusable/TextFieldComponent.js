@@ -1,7 +1,14 @@
 import React from 'react'
 import { TextField } from '@material-ui/core';
 
-function TextFieldComponent({name,type,label,placeholder,className,handleChange,value}) {
+function TextFieldComponent(
+    {   name,
+        type,
+        label,
+        placeholder,
+        className,
+        handleChange,
+        value,disabled = false}) {
     return (
         <TextField 
             required
@@ -13,6 +20,7 @@ function TextFieldComponent({name,type,label,placeholder,className,handleChange,
             onInput={handleChange}
             value={value}
             required
+            disabled={disabled}
             variant="outlined" 
             color="primary"
             >
