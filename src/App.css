@@ -1,3 +1,67 @@
 .App {
     text-align: center;
+    background-color: #fff;
+}
+
+.profile-image {
+    border-radius: 50% !important;
+    width: 100%;
+    height: auto;
+}
+
+.upload-avatar {
+    border: 2px solid #2f4050 !important;
+    background-color: white !important;
+    color: #2f4050 !important;
+}
+
+.upload-avatar:hover {
+    border: 2px solid #2f4050;
+    background-color: #2f4050 !important;
+    color: white !important;
+}
+
+.profile-update {
+    border: 2px solid #2f4050;
+    background-color: #2f4050 !important;
+    color: white !important;
+}
+
+.profile-update:hover {
+    border: 2px solid #2f4050;
+    background-color: white !important;
+    color: #2f4050 !important;
+}
+
+.profile-title {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+}
+
+.profile-help-text,
+.text-field-name {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+@media (max-width: 992px) {
+    .profile-title {
+        font-size: 1.6rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-title {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile-title {
+        font-size: 1.3rem !important;
+    }
+}
+
+@media (max-width: 200px) {
+    .profile-title {
+        font-size: 0.8rem !important;
+    }
 }

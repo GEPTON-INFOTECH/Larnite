@@ -12,108 +12,60 @@ import 'react-phone-input-2/lib/style.css'
 import './Auth.css';
 import SnackbarComponent from '../reusable/SnackbarComponent';
 import Spinner from '../reusable/Spinner';
+import { closeSnackbar, loginUser } from '../../redux/auth/Actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Auth(props) {
     const [state,setState] = useState({
         authType: 'Sign In',
         phone: '',
         OTP: '',
-        updateDetails: false,
-        loading: false,
-        open: false,
-        message: ''
     });
+
+    const auth = useSelector(state => state.uReducer);
+    const dispatch = useDispatch();
 
     window.recaptchaWrapperRef = null;
 
     // DETERMINES THE PAGE TYPE FROM URL
     useEffect(() => {
-       
+        if(auth.isLoggedIn == true) {
+            props.history.push('/');
+        }
     },[])
 
     const handleRecaptch = ($event) => {
         $event.preventDefault();
-        if ( window.appVerifier &&  window.recaptchaWrapperRef) {
-            window.appVerifier.clear()
-            window.recaptchaWrapperRef.innerHTML = `<div id="recaptcha"></div>`
-          }
-        // VERIFY OTP
-        window.appVerifier = new firebase.auth.RecaptchaVerifier("recaptcha",{
-            'size': 'invisible',
-        });
+        try {
+            if ( window.appVerifier &&  window.recaptchaWrapperRef) {
+                window.appVerifier.clear()
+                window.recaptchaWrapperRef.innerHTML = `<div id="recaptcha"></div>`
+              }
+            // VERIFY OTP
+            window.appVerifier = new firebase.auth.RecaptchaVerifier("recaptcha",{
+                'size': 'invisible',
+            });
+        } catch(e) {
+            console.log(e);
+        }
+ 
         handleSubmit();
     }
 
     const handleSubmit = () => {
-            setState({
-                ...state,
-                loading: true
-            })
-            firebase.auth().signInWithPhoneNumber(`+${state.phone}`, window.appVerifier)
-            .then(function (confirmCode) {
-                let OTP = window.prompt('Enter the OTP you received','');
-                if(OTP != null){
-                    confirmCode.confirm(OTP)
-                    .then(async res => {
-                        setState({
-                            ...state,
-                            updateDetails: res.additionalUserInfo.isNewUser,
-                            loading: false
-                        }); 
-
-                        if(!res.additionalUserInfo.isNewUser){
-                            let db = firebase.firestore();
-                            let data = await db.collection('students').doc(`+${state.phone}`).get();
-                            console.log(data.data());
-                            if(data.data() == undefined) {
-                                setState({
-                                    ...state,
-                                    updateDetails: true
-                                }); 
-                            } else {
-                                props.history.push('/');
-                            }
-                        }
-                        window.appVerifier.reset();
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        setState({
-                            ...state,
-                            loading: false,
-                            open: true,
-                            message: err.message
-                        })
-                        window.appVerifier.reset();
-                        console.log(err);
-                    })
-                }
-            })
-            .catch(function (error) {
-                setState({
-                    ...state,
-                    loading: false,
-                    open: true,
-                    message: error.message
-                })
-                console.log(error);
-            });           
+        dispatch(loginUser(state.phone,props.history,window.appVerifier));           
     }
 
     const handleClose = () => {
-        setState({
-            ...state,
-            open: false,
-            message: ''
-        })
+        dispatch(closeSnackbar());
     }
 
     return (
         // AUTH FORM
         <div className="container mt-0 mt-md-5  text-center">
             <div className="row mt-0 mt-md-5 pt-5 mb-5">
-            <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose} />
-            {state.updateDetails == false ? 
+            <SnackbarComponent open={auth.open} message={auth.error} handleClose={handleClose} />
+            {auth.updateDetails == false ? 
                 <div 
                     className="
                     col-lg-6 col-md-8
@@ -149,7 +101,7 @@ function Auth(props) {
                             </div>
                             {/* END OF PHONE NUMBER */}
 
-                            { state.loading == false ?
+                            { auth.loading == false ?
                                 <Button 
                                     type="submit"
                                     color="primary"

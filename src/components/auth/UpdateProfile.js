@@ -1,5 +1,4 @@
 import React,{ useState,useEffect } from 'react'
-import { Courses } from '../data/Courses';
 import CheckboxComponent from '../reusable/CheckboxComponent';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,6 +10,9 @@ import { useHistory } from "react-router-dom";
 import UpdateProfileData from '../data/UpdateProfile';
 import TextFieldComponent from '../reusable/TextFieldComponent';
 import SnackbarComponent from '../reusable/SnackbarComponent';
+import MultipleSelect from '../reusable/MultipleSelect';
+import { useDispatch } from 'react-redux';
+import { updateProfile } from '../../redux/profile/Actions';
 
 function UpdateProfile({phone}) {
     const [state,setState] = useState({
@@ -21,12 +23,13 @@ function UpdateProfile({phone}) {
         open: false,
         message: ''
     });
+    const dispatch = useDispatch();
 
     let history = useHistory();
     useEffect(() => {
         setState({
             ...state,
-            courses: Courses,
+            courses: [],
             open: true,
             message: 'Update your details'
         })
@@ -54,38 +57,10 @@ function UpdateProfile({phone}) {
 
     const handleSubmit = ($event) => {
         $event.preventDefault();
-        console.log('UPDATE FORM SUBMITTED');
-
-        
-        setState({
-            ...state,
-            open: true,
-            message: 'Profile Details Updated'
-        });
-
-        const db = firebase.firestore();
-        // INSERT DATA INTO FIRESTORE
-        const students = db.collection('students')
-                .doc(phone)
-                .set({
-                    firstName: state.firstName,
-                    lastName: state.lastName,
-                    email: state.email,
-                    phone: phone
-                });
-
-        
+        dispatch(updateProfile(state,phone));
         history.push('/');
     }
 
-    const getCourseCheckboxes = state.courses.map((data,val) => (
-            <CheckboxComponent 
-                key={val}
-                checked={data.checked} 
-                name={data.title}
-                handleChange={handleChange}
-                />
-    ));
 
     const getInputFields = UpdateProfileData.map((data,val) => (
         <TextFieldComponent
@@ -98,6 +73,13 @@ function UpdateProfile({phone}) {
             handleChange={handleChange}
         />
     ));
+
+    const handleCourseChange = ($event) => {
+        setState({
+            ...state,
+            courses: $event.target.value
+        });
+    }
 
     const handleClose = () => {
         setState({
@@ -129,15 +111,12 @@ function UpdateProfile({phone}) {
                         </Typography>
                     
                         <form onSubmit={handleSubmit} className="mt-5">
-                            
-
                                 { getInputFields }
+                                <br/>
+                                <br />
+                                <MultipleSelect handleCourseChange={handleCourseChange} courses={state.courses} />
+                                <br />
 
-                                <br/>
-                                {/* CHECBOXES */}
-                                { getCourseCheckboxes }
-                                {/* END OF CHECKBOXES */}
-                                <br/>
                                 <Button 
                                     type="submit"
                                     color="primary"
