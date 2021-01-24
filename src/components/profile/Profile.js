@@ -1,6 +1,7 @@
 import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import AvatarImage from '../../images/avatar.png';
+import AvatarImage from '../../images/Avatar2.jpg';
+import AvatarBG from '../../images/Avatar2bg.jpg';
 import '../../App.css';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import TextFieldComponent from '../reusable/TextFieldComponent';
@@ -173,10 +174,17 @@ function Profile(props) {
             <div className="row">
                 <div className="col-md-5 col-12 mt-3">
                     <div className="row">
-                        <div className="col-md-12 col-sm-10 col-10 offset-1 offset-md-0 offset-sm-1 position-relative">
-                            <img src={AvatarImage} className="profile-image"/>
+                        <div className="col-md-12 col-sm-12 col-12 position-relative mt-5">
+                            <div className="p-0 text-center position-relative w-100">
+                                <img src={AvatarBG} className="w-100"/>
+                                <img src={AvatarImage} className="profile-image  position-absolute bg-white"/>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
                             <Button 
                                 variant="contained" 
+                                size="small"
                                 className="upload-avatar"
                                 startIcon={<CameraAltIcon />}
                                 >

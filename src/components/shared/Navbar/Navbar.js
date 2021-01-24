@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import './Navbar.css';
 import { NavItems } from '../../data/Navbar';
 import { Button } from '@material-ui/core';
@@ -6,20 +6,48 @@ import { Link, useHistory } from 'react-router-dom';
 import SnackbarComponent from '../../reusable/SnackbarComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSnackbar, logout } from '../../../redux/auth/Actions';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import EditIcon from '@material-ui/icons/Edit';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
 
 function Navbar() {
+    
     const state = useSelector(state => state.uReducer);
+    const [currentState,setCurrentState] = useState({
+        menuOpen: false
+    });
     const dispatch = useDispatch();
     const history = useHistory();
     // NAV BUTTONS
     const NavItemHTML = NavItems.map((data,val) => (                    
         <li className="nav-item pl-4 pl-md-0 ml-0 mx-md-3 " key={val}>
-            <Link className="nav-link" to={data.link}>{data.title}</Link>
+            <Link className="nav-link" to={data.link}>
+                {data.icon}&nbsp;&nbsp;{data.title}
+            </Link>
         </li>
     ));
 
+    useEffect(() => {
+
+    },[])
+
+    const handleMenuClose = () => {
+        setCurrentState({
+            ...state,
+            anchorEl: null,
+            menuOpen: false
+        })
+    }
+
+    const handleMenuOpen = ($event) => {
+        setCurrentState({
+            ...state,
+            menuOpen: true,
+            anchorEl: $event.currentTarget
+        })
+    }
 
     return (
         <div className="Navbar shadow p-3">
@@ -51,11 +79,34 @@ function Navbar() {
                             <div className="my-auto my-profile">
                                 {
                                     state.isLoggedIn == false ? '':
-                                    <span className="my-auto py-auto">
-                                        <Link className="nav-link my-auto py-auto" to='/profile'>
-                                            <h6>Welcome <span className="name-color">{ state.user.firstName }</span></h6>
-                                        </Link>
-                                    </span>
+                                    <>
+                                    <Button 
+                                        size="large" 
+                                        aria-controls="profile-menu" 
+                                        aria-haspopup="true" 
+                                        className="" 
+                                        onClick={handleMenuOpen}
+                                        startIcon={<PersonIcon />}
+                                        >
+                                           <b>Welcome,&nbsp;<span className="name-color">{ state.user.firstName }</span></b>
+                                    </Button>
+                                    
+                                        <Menu
+                                            id="profile-menu"
+                                            anchorEl={currentState.anchorEl}
+                                            keepMounted
+                                            open={currentState.menuOpen}
+                                            onClose={handleMenuClose}
+                                        >
+                                            <MenuItem onClick={() => {handleMenuClose();history.push('/profile')}}>
+                                                <EditIcon />&nbsp;&nbsp;Edit Profile
+                                            </MenuItem>
+
+                                            <MenuItem onClick={() => {handleMenuClose();dispatch(logout(history))}} >
+                                                <ExitToAppIcon />&nbsp;&nbsp;Logout
+                                                </MenuItem>
+                                        </Menu>
+                                  </>
                                 }
                             </div>
                         }

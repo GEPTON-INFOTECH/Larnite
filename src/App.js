@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import Profile from './components/profile/Profile';
 import Protected from './components/shared/protected/Protected';
+import Courses from './components/courses/Courses';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/signin" exact component={Auth}/>
             <Protected path="/profile" exact component={Profile} />
+            <Protected path="/courses" exact component={Courses} />
           </Switch>
           {/* END OF ROUTES */}
       </div>

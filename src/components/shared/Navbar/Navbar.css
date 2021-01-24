@@ -36,8 +36,13 @@
     transition: all 0.3s ease-out;
 }
 
+.Navbar {
+    background-color: white !important;
+}
+
 .navbar {
     padding: 0;
+    background-color: white !important;
 }
 
 .navbar-brand img {
@@ -124,7 +129,6 @@
     position: relative;
     padding: 5px 0 !important;
     display: inline-block;
-    font-size: larger;
 }
 
 .nav-item:after {

@@ -27,6 +27,20 @@ export const updateProfile =  (state,phone) => {
     return async dispatch => {
         dispatch(updateProfileRequest())
         const db = firebase.firestore();
+
+        let courses = state.courses;
+        if(courses.length == 0) {
+            const db = firebase.firestore();
+            let data = await db.collection('courses').get();
+
+            data.docs.forEach(doc => {
+                courses.push(
+                    doc.data().courseName
+                );
+            });
+        }
+        console.log(courses);
+
         // INSERT DATA INTO FIRESTORE
         await db.collection('students')
                 .doc(phone)
@@ -35,7 +49,7 @@ export const updateProfile =  (state,phone) => {
                     lastName: state.lastName,
                     email: state.email,
                     phone: phone,
-                    course: state.courses
+                    course: courses
                 });
 
 
