@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import AvatarImage from '../../images/Avatar2.jpg';
-import AvatarBG from '../../images/Avatar2bg.jpg';
+import AvatarImage from '../../images/avatars/avatar/Avatar2.jpg';
+import AvatarBG from '../../images/avatars/cover/Avatar2bg.jpg';
 import '../../App.css';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import TextFieldComponent from '../reusable/TextFieldComponent';
@@ -11,6 +11,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSnack, fetchUser, updateProfile, updateBio } from '../../redux/profile/Actions';
 import SnackbarComponent from '../reusable/SnackbarComponent';
+import DialogComponent from '../reusable/DialogComponent';
+import AvatarComponent from '../reusable/AvatarComponent';
 
 function Profile(props) {
     const [state,setState] = useState({
@@ -21,7 +23,8 @@ function Profile(props) {
         editBio: false,
         editAbout: false,
         bio: 'Beatae pariatur neque recusandae! Exercitationem laborum voluptatibus repellat accusantium laudantium, consequuntur asperiores quisquam non, expedita ipsum possimus nam',
-        editBioValue: 'Beatae pariatur neque recusandae! Exercitationem laborum voluptatibus repellat accusantium laudantium, consequuntur asperiores quisquam non, expedita ipsum possimus nam'
+        editBioValue: 'Beatae pariatur neque recusandae! Exercitationem laborum voluptatibus repellat accusantium laudantium, consequuntur asperiores quisquam non, expedita ipsum possimus nam',
+        dialogOpen: false
     });
     const profile = useSelector(state => state.pReducer);
     const user = useSelector(state => state.uReducer);
@@ -52,6 +55,19 @@ function Profile(props) {
 
     const handleClose = () => {
         dispatch(closeSnack());
+    }
+
+    const handleDialogOpen = () => {
+        setState({
+            ...state,
+            dialogOpen: true
+        })
+    }
+    const handleDialogClose = () => {
+        setState({
+            ...state,
+            dialogOpen: false
+        })
     }
 
 
@@ -171,14 +187,15 @@ function Profile(props) {
                 message={profile.message}
                 handleClose={handleClose}
                 />
+
+            {/* FULL WIDTH DIALOG */}
+            <DialogComponent open={state.dialogOpen} handleClose={handleDialogClose} />
+            {/* END OF WIDTH DIALOG */}
             <div className="row">
                 <div className="col-md-5 col-12 mt-3">
                     <div className="row">
                         <div className="col-md-12 col-sm-12 col-12 position-relative mt-5">
-                            <div className="p-0 text-center position-relative w-100">
-                                <img src={AvatarBG} className="w-100"/>
-                                <img src={AvatarImage} className="profile-image  position-absolute bg-white"/>
-                            </div>
+                            <AvatarComponent bg={AvatarBG} image={AvatarImage} />
                             <br />
                             <br />
                             <br />
@@ -186,6 +203,7 @@ function Profile(props) {
                                 variant="contained" 
                                 size="small"
                                 className="upload-avatar"
+                                onClick={handleDialogOpen}
                                 startIcon={<CameraAltIcon />}
                                 >
                                 Change Avatar
