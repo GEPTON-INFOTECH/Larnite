@@ -232,9 +232,9 @@ function Profile(props) {
                                         </div>
                                     </div>
                                     :
-                                    <p className="text-left profile-help-text">
+                                    <div className="text-left profile-help-text">
                                         {user.user.bio}
-                                        <div className="text-right mt-2">
+                                        <p className="text-right mt-2">
                                             <Button 
                                                 color="primary" 
                                                 variant="text" 
@@ -242,8 +242,8 @@ function Profile(props) {
                                                 startIcon={<EditIcon />}>
                                                     Edit Bio
                                             </Button>
-                                        </div>
-                                    </p>
+                                        </p>
+                                    </div>
                                 }
 
                                 </CardContent>

@@ -88,7 +88,7 @@ function Navbar() {
                                         onClick={handleMenuOpen}
                                         startIcon={<PersonIcon />}
                                         >
-                                           <b>Welcome,&nbsp;<span className="name-color">{ state.user.firstName }</span></b>
+                                           <b className="opacity-text">Welcome,&nbsp;<span className="name-color">{ state.user.firstName }</span></b>
                                     </Button>
                                     
                                         <Menu
