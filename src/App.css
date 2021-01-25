@@ -130,6 +130,11 @@
     opacity: 0.6;
 }
 
+.theme-background {
+    background-color: #502099 !important;
+    color: white !important;
+}
+
 .read-more {
     position: relative;
     display: inline-block;

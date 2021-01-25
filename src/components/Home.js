@@ -15,7 +15,7 @@ function Home() {
                         <p className="text-left course-content">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, vel, sed laborum, at recusandae magni maxime debitis voluptate corporis est fugiat. Corrupti asperiores natus ratione, quos assumenda quasi illo inventore!
                         </p>
-                        <Button className="mt-2 text-left rounded-pill mb-3 mb-md-0" size="large" variant="contained" color="primary">Expore Courses</Button>
+                        <Button className="mt-2 text-left rounded-pill mb-3 mb-md-0 theme-background" size="large" variant="contained" color="primary">Expore Courses</Button>
                     </div>
                     <div className="col-md-6 col-12">
                         <img src={Course} className="img-fluid"/>

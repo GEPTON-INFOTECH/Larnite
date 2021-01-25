@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Card, CardContent} from '@material-ui/core';
+import { Card, CardContent} from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import Compass from '../../images/compass.png';
 import '../../App.css';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import AnimateButton from './AnimateButton';
 
 function ChapterCard() {
     return (
@@ -20,12 +20,7 @@ function ChapterCard() {
                     adipisicing elit. Eveniet vel in quae
                     architecto nisi dolorum. Sint corporis
                 </p>
-                <Button class="read-more btn mt-2">
-                    <span class="circle">
-                    <span class="icon arrow"></span>
-                    </span>
-                    <span class="button-text">Read More</span>
-                </Button>
+                <AnimateButton text="Read More" />
             </CardContent>
         </Card>
     )

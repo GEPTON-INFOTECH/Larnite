@@ -151,9 +151,9 @@ function Profile(props) {
                                 Cancel
                         </Button>
                         <Button 
-                            variant="text" 
                             onClick={handleSubmit}
                             color="primary"
+                            className="theme-background"
                             variant="contained"
                             >
                                 Update Bio
@@ -225,6 +225,7 @@ function Profile(props) {
                                                 type="button"
                                                 color="primary"
                                                 variant="contained"
+                                                className="theme-background"
                                                 onClick={updateBioForm}
                                                 >
                                                     Update
@@ -235,7 +236,7 @@ function Profile(props) {
                                     <div className="text-left profile-help-text">
                                         {user.user.bio}
                                         <p className="text-right mt-2">
-                                            <Button 
+                                            <Button
                                                 color="primary" 
                                                 variant="text" 
                                                 onClick={editBio}
