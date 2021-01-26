@@ -22,11 +22,11 @@ export const  updateProfileMessage = (msg) => {
     }
 }
 
-
 export const updateProfile =  (state,phone) => {
     return async dispatch => {
         dispatch(updateProfileRequest())
         const db = firebase.firestore();
+
 
         let courses = state.courses;
         if(courses.length == 0) {
@@ -39,26 +39,41 @@ export const updateProfile =  (state,phone) => {
                 );
             });
         }
-        console.log(courses);
-
-        // INSERT DATA INTO FIRESTORE
-        await db.collection('students')
-                .doc(phone)
-                .update({
-                    firstName: state.firstName,
-                    lastName: state.lastName,
-                    email: state.email,
-                    phone: phone,
-                    course: courses
-                });
-
-
+        
         let student = await db.collection('students').doc(phone).get();
+
+        if(student.data() == null) {
+            const cover = (await db.collection('covers')
+                            .get()).docs[0].data();
+            const avatar = (await db.collection('avatars')
+                            .get()).docs[0].data();
+            // INSERT DATA INTO FIRESTORE
+            await db.collection('students')
+                .doc(phone)
+                .set({
+                    cover: cover.URL,
+                    avatar: avatar.URL
+                },{merge: true});
+        }
+
+        await db.collection('students')
+        .doc(phone)
+        .set({
+            firstName: state.firstName,
+            lastName: state.lastName,
+            email: state.email,
+            phone: phone,
+            course: courses
+        },{merge: true});
+       
+
+
+        student = await db.collection('students').doc(phone).get();
 
         dispatch(updateProfileMessage('Profile Update Successful'));
         
         localStorage.setItem('User',JSON.stringify(student.data()));
-        localStorage.setItem('Exp',Date.now() + 60*60*24*1000);
+        localStorage.setItem('Exp',Date.now() + 24*60*60*1000);
     
         dispatch(loginUserAuth(student.data(),false));
     }

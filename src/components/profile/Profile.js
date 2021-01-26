@@ -172,7 +172,7 @@ function Profile(props) {
                             className="theme-background"
                             variant="contained"
                             >
-                                Update Bio
+                                Update
                         </Button>
                 </div> : ''}
                 </>
@@ -189,13 +189,18 @@ function Profile(props) {
                 />
 
             {/* FULL WIDTH DIALOG */}
-            <DialogComponent open={state.dialogOpen} handleClose={handleDialogClose} />
+            <DialogComponent 
+                alreadySelected={{ cover: user.user?.cover,avatar: user.user?.avatar}}
+                phone={user.user?.phone}
+                cover={user.user?.cover || ''}
+                open={state.dialogOpen} 
+                handleClose={handleDialogClose} />
             {/* END OF WIDTH DIALOG */}
             <div className="row">
                 <div className="col-md-5 col-12 mt-3">
                     <div className="row">
                         <div className="col-md-12 col-sm-12 col-12 position-relative mt-5">
-                            <AvatarComponent bg={AvatarBG} image={AvatarImage} />
+                            <AvatarComponent bg={user.user?.cover} image={user.user?.avatar} />
                             <br />
                             <br />
                             <br />

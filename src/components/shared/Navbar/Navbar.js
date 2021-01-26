@@ -69,7 +69,7 @@ function Navbar() {
                        
                         
                         {/* BUTTON FOR SIGIN */}
-                        { state.isLoggedIn == false ? 
+                        { (state.user == { } || state.user == null) ? 
                             <Link to="/signin">
                                 <Button color="primary" variant="contained" className="ml-0 ml-md-2 px-5 login-button text-left text-md-center ">
                                     Sign In
@@ -78,7 +78,7 @@ function Navbar() {
                             :
                             <div className="my-auto my-profile">
                                 {
-                                    state.isLoggedIn == false ? '':
+                                   
                                     <>
                                     <Button 
                                         size="large" 
@@ -88,7 +88,7 @@ function Navbar() {
                                         onClick={handleMenuOpen}
                                         startIcon={<PersonIcon />}
                                         >
-                                           <b className="opacity-text">Welcome,&nbsp;<span className="name-color">{ state.user.firstName }</span></b>
+                                           <b className="opacity-text">Welcome,&nbsp;<span className="name-color">{ state.user?.firstName }</span></b>
                                     </Button>
                                     
                                         <Menu

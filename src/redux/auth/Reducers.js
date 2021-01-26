@@ -29,7 +29,7 @@ const authReducer = (state=initialState,action) => {
         case LOGIN_USER_REQUEST: return {
             ...state,
             loading: true,
-            user: {},
+            user: null,
             isLoggedIn: false,
             error: '',
             open: false,

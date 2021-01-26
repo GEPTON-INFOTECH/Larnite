@@ -138,7 +138,7 @@
 
 /* CHOOSE AVATAR */
 
-label {
+label.checkLabel {
     border: 1px solid #fff;
     padding: 10px;
     display: block;
@@ -153,7 +153,7 @@ label {
     user-select: none;
 }
 
-label::before {
+label.checkLabel::before {
     background-color: white;
     color: white;
     content: " ";
@@ -175,7 +175,7 @@ label::before {
     display: none;
 }
 
-label .avatar-demo {
+label.checkLabel .avatar-demo {
     transition-duration: 0.2s;
     transform-origin: 50% 50%;
 }
