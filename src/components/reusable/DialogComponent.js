@@ -50,6 +50,7 @@ function DialogComponent({open,handleClose,cover,phone,alreadySelected}) {
             name="avatar" 
             type="radio" 
             id={'myCheckbox' + val}
+            checked={selected.cover.URL == d.cover.URL}
             onClick={(event) => {setSelected(d);}} 
             className="avatar-checkbox" />
           <label 
