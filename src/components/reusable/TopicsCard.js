@@ -5,7 +5,7 @@ import Compass from '../../images/compass.png';
 import '../../App.css';
 import AnimateButton from './AnimateButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
+import { Link } from 'react-router-dom';
 
 function TopicsCard({course,paper}) {
     return (
@@ -16,11 +16,13 @@ function TopicsCard({course,paper}) {
                 </h4>
                 <LinearProgress 
                     style={{height: '10px'}}
-                    className="rounded-pill text-left mt-3"
+                    className="rounded-pill text-left mt-5"
                     variant="determinate" 
                     value={40} /> 
-                <p className="text-left">40% Complete</p>
-                <AnimateButton text="Read More" />
+                <p className="text-left mb-2">40% Complete</p>
+                <Link to={`papers/${paper.paperName.replace(/\s/g,'-')}`}>
+                    <AnimateButton text="Read More" />
+                </Link>
             </CardContent>
         </Card>
     )

@@ -1,14 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Redirect } from 'react-router';
+import { Redirect,Route } from 'react-router';
 
-function Protected({component,...props}) {
+
+function Protected({component,...rest}) {
     const user = useSelector(state => state.uReducer);
     const Component = component;
     return (
-            (user.isLoggedIn == true) ? 
-                <Component {...props} /> : 
-                <Redirect to="/signin" {...props} />
+        (user.isLoggedIn == true) ? 
+        <Route {...rest} render={(props => (<Component {...props}/>))} /> : 
+                <Redirect to="/signin" {...rest} />
     )
 }
 

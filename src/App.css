@@ -2,6 +2,7 @@
     text-align: center;
     background-color: #f4f7f6;
     min-height: 100vh;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
 }
 
 .profile-image {
@@ -85,6 +86,7 @@
     font-weight: 700;
     position: relative;
     /* padding-bottom: 20px; */
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     text-align: left;
 }
 
@@ -92,8 +94,9 @@
     font-size: 32px;
     color: #502099;
     text-transform: uppercase;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-weight: 800;
-    letter-spacing: 2px !important;
+    letter-spacing: 6px !important;
     position: relative;
     padding-bottom: 10px;
     text-align: center;
@@ -102,7 +105,7 @@
 .course-content {
     font-size: 18px !important;
     opacity: 0.8;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 .heading-underline::before {
@@ -120,8 +123,9 @@
 }
 
 .chapter-title {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
     font-weight: 700;
+    letter-spacing: 3px;
     color: #502099;
     opacity: 0.8;
 }

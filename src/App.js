@@ -8,6 +8,7 @@ import store from './redux/store';
 import Profile from './components/profile/Profile';
 import Protected from './components/shared/protected/Protected';
 import Courses from './components/courses/Courses';
+import Papers from './components/papers/Papers';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/signin" exact component={Auth}/>
             <Protected path="/profile" exact component={Profile} />
             <Protected path="/courses" exact component={Courses} />
+            <Protected path="/papers/:paperName" exact component={Papers} />
           </Switch>
           {/* END OF ROUTES */}
       </div>

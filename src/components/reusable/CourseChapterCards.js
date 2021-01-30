@@ -18,7 +18,7 @@ function CourseChapterCards({ course }) {
 
     const [state,setState] = useState({
         courseID: course.id,
-        topics: [],
+        papers: [],
         loading: false,
         open: false,
         message: ''
@@ -52,11 +52,12 @@ function CourseChapterCards({ course }) {
         { width: 1200, itemsToShow: 4 },
       ];
       
-    const topicCard = state?.papers?.map((d,val) => {
-        console.log(d);
+
+    // E
+    const paperCard = state?.papers?.map((d,val) => {
         return d != null ? (
                             <TopicsCard key={val} paper={d} course={course} />
-                            ) : (<div></div>)
+                           ) : (<div></div>)
     });
 
     const enrollCourse = async () => {
@@ -119,18 +120,16 @@ function CourseChapterCards({ course }) {
             <p className="text-left pl-0 pl-md-3 mt-3">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto at obcaecati perferendis soluta quisquam consectetur amet repellendus vitae doloremque blanditiis, cumque nostrum aliquam eveniet porro, necessitatibus ullam. Dolores, est vitae.
             </p>
-            <div className="mt-5">
+            <div className="mt-3">
                     { (course.papers == null || course.papers.length == 0) ? 
-                            <Card>
+                            <Card className="text-left">
                                 <CardContent>
                                     <h3>We are working on the resources</h3>
                                 </CardContent>
                             </Card>
                         :
                         <Carousel className="mx-0 px-0" renderArrow={myArrow} breakPoints={breakPoints}>
-                                {
-                                    state.papers == [] ? <div></div>: topicCard 
-                                }
+                                 {state.papers != [] ? paperCard : <div></div>}
                         </Carousel>
                     }
 
