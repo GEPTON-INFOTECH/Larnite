@@ -296,3 +296,25 @@ label.checkLabel .avatar-demo {
 .read-more:hover .button-text {
     color: #fff;
 }
+
+.MuiDrawer-paper {
+    height: 90% !important;
+    margin-top: 73px !important;
+    width: 300px !important;
+    margin-bottom: 10px !important;
+}
+
+.paper-content {
+    margin-left: 300px !important;
+}
+
+@media (max-width: 1199px) {
+    .paper-content {
+        margin-left: 0px !important;
+    }
+}
+
+.drawer {
+    position: relative !important;
+    overflow-y: auto !important;
+}
