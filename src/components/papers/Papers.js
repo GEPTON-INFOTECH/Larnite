@@ -19,6 +19,9 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import { Scrollbars } from 'react-custom-scrollbars';
+import 'react-pro-sidebar/dist/css/styles.css';
+import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+
 
 
 function Papers(props) {
@@ -55,7 +58,7 @@ function Papers(props) {
         <>
         <Divider />
         {['Mathematics','Physics','Chemistry','Mathematics','Physics','Chemistry'].map((d,val) => (
-            <Accordion expanded={state.expanded === `panel${val}`} onChange={() => handleChange(`panel${val}`)}>
+            <Accordion key={val} expanded={state.expanded === `panel${val}`} onChange={() => handleChange(`panel${val}`)}>
             <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3bh-content"
@@ -66,24 +69,13 @@ function Papers(props) {
             </AccordionSummary>
             <AccordionDetails>
             <List className="w-100">
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+            {['Inbox', 'Starred', 'Send email', 'Drafts','All mail', 'Trash', 'Spam','All mail', 'Trash', 'Spam','All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem  onClick={handleClose(false)}  button key={index}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={text} />
             </ListItem>
             ))}
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-            </ListItem>
-            ))}
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-            </ListItem>
-            ))}
+            
             </List>
 
             </AccordionDetails>
@@ -92,6 +84,73 @@ function Papers(props) {
         )) }
        
         </>
+    )
+
+    const getSidebar = (
+        <ProSidebar className="w-100 ">
+        <SidebarHeader>
+            <div className="text-right text-white d-block d-xl-none pl-2 pl-md-0">
+            <IconButton onClick={handleClose(false)}>
+                    <CloseIcon className="text-white" />
+            </IconButton>
+            </div>
+        </SidebarHeader>
+        <SidebarContent>
+            <Scrollbars>
+            <Menu iconShape="square" className="pr-2 pr-md-0">
+                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
+                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
+                <MenuItem>Component 1</MenuItem>
+                <MenuItem>Component 2</MenuItem>
+                </SubMenu>
+                
+            </Menu>
+            <Menu iconShape="square" className="pr-2 pr-md-0">
+                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
+                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
+                <MenuItem>Component 1</MenuItem>
+                <MenuItem>Component 2</MenuItem>
+                </SubMenu>
+                
+            </Menu>
+            <Menu iconShape="square" className="pr-2 pr-md-0">
+                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
+                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
+                <MenuItem>Component 1</MenuItem>
+                <MenuItem>Component 2</MenuItem>
+                </SubMenu>
+                
+            </Menu>
+            <Menu iconShape="square" className="pr-2 pr-md-0">
+                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
+                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
+                <MenuItem>Component 1</MenuItem>
+                <MenuItem>Component 2</MenuItem>
+                </SubMenu>
+                
+            </Menu>
+            <Menu iconShape="square" className="pr-2 pr-md-0">
+                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
+                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
+                <MenuItem>Component 1</MenuItem>
+                <MenuItem>Component 2</MenuItem>
+                </SubMenu>
+                
+            </Menu>
+            <Menu iconShape="square" className="pr-2 pr-md-0">
+                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
+                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
+                <MenuItem>Component 1</MenuItem>
+                <MenuItem>Component 2</MenuItem>
+                </SubMenu>
+                
+            </Menu>
+            </Scrollbars>
+        </SidebarContent>
+        <SidebarFooter>
+          Footer
+        </SidebarFooter>
+      </ProSidebar>
     )
 
     return (
@@ -109,7 +168,7 @@ function Papers(props) {
                     overflow: 'auto',
                     marginBottom: '200px'
                 }}>
-                {listItems}
+                {getSidebar}
                 </Scrollbars>
             </Drawer>
 
@@ -121,19 +180,7 @@ function Papers(props) {
                 onClose={handleClose(false)}
                 onOpen={handleClose(true)}
             >
-            <div className="ml-auto" >
-                <IconButton onClick={handleClose(false)}>
-                    <CloseIcon />
-                </IconButton>
-            </div>
-            <div onClick={handleClose(false)}>
-
-                <Scrollbars className={{
-                        overflow: 'auto',
-                    }}>
-                {listItems}
-                </Scrollbars>
-            </div>
+                {getSidebar}
             </SwipeableDrawer>
             <div className="mt-3 text-left paper-content">
                 <Button onClick={handleClose(true)} className="d-block d-xl-none">Menu</Button>

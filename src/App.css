@@ -312,9 +312,12 @@ label.checkLabel .avatar-demo {
     .paper-content {
         margin-left: 0px !important;
     }
+    .MuiDrawer-paper {
+        margin-top: 0px !important;
+        height: 100% !important;
+    }
 }
 
 .drawer {
     position: relative !important;
-    overflow-y: auto !important;
 }
