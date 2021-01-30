@@ -53,8 +53,8 @@ function Navbar() {
         <div className="Navbar shadow p-3">
             <nav className="navbar navbar-expand-md navbar-light sticky-top">
                     {/* NAVBAR LOGO */}
-                    <a className="navbar-brand" href="https://front.codes/" target="_blank">
-                        NavIcon
+                    <a className="navbar-brand" href="/" target="_blank">
+                        Pymaths
                     </a>	
                     {/* END OF NAVBAR LOGO */}
                     {/* TOGGLER BUTTON */}
