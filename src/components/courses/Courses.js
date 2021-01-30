@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CourseChapterCards from '../reusable/CourseChapterCards'
 import '../../App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCourses } from '../../redux/courses/Actions';
 
 function Courses() {
+    const dispatch = useDispatch();
+    const courses = useSelector(state => state.cReducer)
+
+    useEffect(()=>{
+        dispatch(fetchCourses());
+    },[]);
+
+    const getCoursesHTML = courses.courses.map((d,val) => {
+        console.log(d);
+        return d != null ? (
+                        <CourseChapterCards key={val} course={d} />
+                     ) : (<></>)
+    });
+
     return (
         <div className="mt-5">
             <div className="container mt-5">
@@ -13,9 +29,7 @@ function Courses() {
             </div>
 
             <div className="container-fluid mt-5 pt-5">
-                <CourseChapterCards />
-                <CourseChapterCards />
-                <CourseChapterCards />
+                { courses && courses.courses != null ? getCoursesHTML : '' }
             </div>
 
         </div>

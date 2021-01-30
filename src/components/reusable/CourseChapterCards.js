@@ -1,18 +1,43 @@
-import React from 'react'
-import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
+import React,{ useState,useEffect } from 'react'
+import { Button, Card, CardActions, CardContent, CircularProgress, TextField, Typography } from '@material-ui/core';
 import '../../App.css';
 import Carousel, { consts } from "react-elastic-carousel";
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import FunctionsIcon from '@material-ui/icons/Functions';
-import ChapterCard from './ChapterCard';
+import TopicsCard from './TopicsCard';
+import { useSelector,useDispatch } from 'react-redux';
+import firebase from '../../firebase/firebase';
+import {loginUserAuth} from '../../redux/auth/Actions';
+import SnackbarComponent from './SnackbarComponent';
+import Spinner from './Spinner';
 
-function CourseChapterCards({ courseName }) {
-    let chapters = [
-        { id: 1, chapterName: 'Algebra'},
-        { id: 2, chapterName: 'Vectors'},
-        { id: 3, chapterName: 'Trignometry'}
-    ]
+function CourseChapterCards({ course }) {
+    const user = useSelector(state => state.uReducer);
+    const dispatch = useDispatch();
+
+    const [state,setState] = useState({
+        courseID: course.id,
+        topics: [],
+        loading: false,
+        open: false,
+        message: ''
+    });
+
+    useEffect(async () => {
+        const db = firebase.firestore();
+        //  FETCH THE TOPICS
+        let papers = [];
+        for(let i = 0 ; course.papers && i < course.papers?.length ; i++ ) {
+            let p = course.papers[i];
+            const t = (await db.collection('Papers').doc(p).get()).data();
+            papers.push(t);
+        }
+        setState({
+            ...state,
+            papers: papers
+        });
+    }, [])
 
     const myArrow = ({ type, onClick, isEdge }) => {
         return type === consts.PREV ? 
@@ -27,25 +52,88 @@ function CourseChapterCards({ courseName }) {
         { width: 1200, itemsToShow: 4 },
       ];
       
-    const chapterCards = chapters.map((ch,vl) => {
+    const topicCard = state?.papers?.map((d,val) => {
+        console.log(d);
+        return d != null ? (
+                            <TopicsCard key={val} paper={d} course={course} />
+                            ) : (<div></div>)
+    });
 
-    })
+    const enrollCourse = async () => {
+        setState({
+            ...state,
+            loading: true
+        })
+        const db = firebase.firestore();
+        let enrolled = user.user.enrolled || [];
+        enrolled.push(course.id);
+        await db.collection('students').doc(user.user.phone).update({
+            enrolled: enrolled
+        });
 
+        const student = (await db.collection('students').doc(user.user.phone).get()).data();
+        
+        localStorage.setItem('User',JSON.stringify(student));
+        dispatch(loginUserAuth(student,false));
+
+        setState({
+            ...state,
+            open: true,
+            message: 'Successfully Enrolled for ' + course.courseName,
+            loading: false,
+        });
+
+    }
+        
+    const handleClose = () => {
+        setState({
+            ...state,
+            open: false,
+            message: ''
+        })
+    }
     return (
         <div className="mt-5 mx-0 mx-sm-2">
+            <SnackbarComponent open={state.open} handleClose={handleClose} message={state.message}/>
             <>
-            <h2 style={{ textAlign: "left" }} className="name-color">
-                <FunctionsIcon/> Maths
+            <h2 style={{ textAlign: "left" }} className="name-color pl-0 pl-md-3">
+                <span className="heading-underline">{ course.courseName }</span> &nbsp;
+                {
+                        (!user.user?.enrolled || 
+                            (   user.user.enrolled &&
+                                 !user.user?.enrolled.includes(course.id))) ?
+                        <Button 
+                            disabled={state.loading} 
+                            onClick={enrollCourse} 
+                            variant="contained" 
+                            className="theme-background"
+                            color="primary">
+                                Enroll Now
+                        </Button> : ''
+                }
+                { state.loading && <CircularProgress size={24} style={{
+                    top: '50%',
+                    left: '50%'
+                    }} />}
             </h2>
-            <p className="text-left course-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero omnis ducimus, veniam, perferendis earum, voluptas harum quam molestiae ut consectetur laudantium iste! Cumque vero architecto consectetur temporibus enim repudiandae fugiat!</p>
+            <p className="text-left pl-0 pl-md-3 mt-3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto at obcaecati perferendis soluta quisquam consectetur amet repellendus vitae doloremque blanditiis, cumque nostrum aliquam eveniet porro, necessitatibus ullam. Dolores, est vitae.
+            </p>
             <div className="mt-5">
-                <Carousel className="mx-0 px-0" renderArrow={myArrow} breakPoints={breakPoints}>
-                    <ChapterCard />
-                    <ChapterCard />
-                    <ChapterCard />
-                    <ChapterCard />
-                    <ChapterCard />
-                </Carousel>
+                    { (course.papers == null || course.papers.length == 0) ? 
+                            <Card>
+                                <CardContent>
+                                    <h3>We are working on the resources</h3>
+                                </CardContent>
+                            </Card>
+                        :
+                        <Carousel className="mx-0 px-0" renderArrow={myArrow} breakPoints={breakPoints}>
+                                {
+                                    state.papers == [] ? <div></div>: topicCard 
+                                }
+                        </Carousel>
+                    }
+
             </div>
             </>
         </div>

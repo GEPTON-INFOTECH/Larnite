@@ -135,6 +135,10 @@
     color: white !important;
 }
 
+.theme-background:disabled {
+    opacity: 0.4
+}
+
 
 /* CHOOSE AVATAR */
 
