@@ -8,7 +8,7 @@ function PaperContent(props) {
 
     return (
         <div>
-            {props.id}
+            {props.match.params.paperName} Syllabus for this paper will be displayed
         </div>
     )
 }

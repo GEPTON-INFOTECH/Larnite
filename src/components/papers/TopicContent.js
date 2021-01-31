@@ -1,9 +1,9 @@
 import React from 'react'
 
-function TopicContent() {
+function TopicContent(props) {
     return (
         <div>
-            Topic
+            {props.match.params.topicName} topic Syllabus / Contents will be displayed here
         </div>
     )
 }

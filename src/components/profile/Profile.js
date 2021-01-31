@@ -279,6 +279,15 @@ function Profile(props) {
                 </div>
                 <div className="col-md-7 col-12 text-left position-relative">
 
+
+                    {/* EXP CARD */}
+                    <Card className="mt-5 mb-5">
+                        <CardContent>
+                        Still working on it
+                        </CardContent>
+                    </Card>
+                    {/* END OF EXP CARD */}
+
                     {/* PROFILE UPDATE CARD */}
                     <Card className="mt-5 mb-5">
                         <CardContent>

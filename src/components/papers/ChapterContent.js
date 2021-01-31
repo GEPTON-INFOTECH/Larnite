@@ -1,9 +1,9 @@
 import React from 'react'
 
-function ChapterContent() {
+function ChapterContent(props) {
     return (
         <div>
-            Chapter
+            {props.match.params.chapterName} information will be displayed
         </div>
     )
 }
