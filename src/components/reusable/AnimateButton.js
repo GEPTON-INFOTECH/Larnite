@@ -1,9 +1,9 @@
 import React from 'react'
 import '../../App.css';
 
-function AnimateButton({text}) {
+function AnimateButton({text,handleClick}) {
     return (
-        <button className="read-more btn mt-2">
+        <button className="read-more btn mt-2" onClick={handleClick}>
             <span className="circle">
             <span className="icon arrow"></span>
             </span>

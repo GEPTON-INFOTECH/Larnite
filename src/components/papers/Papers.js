@@ -21,15 +21,18 @@ import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import { Scrollbars } from 'react-custom-scrollbars';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-
+import TopicList from '../reusable/TopicList';
+import firebase from '../../firebase/firebase';
 
 
 function Papers(props) {
-
     const [state,setState] = useState({
-        paperName: '',
+        paperName: props.match.params.paperName,
         open: true,
-        expanded:''
+        expanded:'',
+        papers: [],
+        course: JSON.parse(localStorage.getItem('Current Course')),
+        loading: true
     });
 
     const handleClose = (b) => event => {
@@ -39,112 +42,54 @@ function Papers(props) {
         })
     }
 
-    const handleChange = (panel) => {
-        setState({
-            ...state,
-            expanded: (panel === state.expanded) ? '': panel
-        })
-    }
+    useEffect(async ()=>{
+        //  GET ALL THE PAPERS OF THE COURSE
+        const db = firebase.firestore();
+        const coursePapers = JSON.parse(localStorage.getItem('Current Course')).papers;
 
-    useEffect(()=>{
+        let p = [];
+        for(let i = 0 ; i < coursePapers.length ; i++) {
+            let paper = (
+                        await db.collection('Papers')
+                                .doc(coursePapers[i])
+                                .get()
+                        ).data();
+            p.push({
+                ...paper,
+                id: coursePapers[i]
+            });
+        }
+
         setState({
             ...state,
-            paperName: props.match.params.paperName
-        })
+            papers: p
+        });
     },[]);
 
+    // GET THE LIST OF PAPERS IN SIDEBAR
+    const getPaperList = state.papers.map((d,val) => (
+        <SubMenu title={d.paperName} icon={<LocalLibraryIcon />} key={val}>
+           <TopicList paper={d} course={state.course} />  
+        </SubMenu>      
+    ))
 
-    const listItems = (
-        <>
-        <Divider />
-        {['Mathematics','Physics','Chemistry','Mathematics','Physics','Chemistry'].map((d,val) => (
-            <Accordion key={val} expanded={state.expanded === `panel${val}`} onChange={() => handleChange(`panel${val}`)}>
-            <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel3bh-content"
-            id="panel3bh-header"
-            >
-            <Typography ><LocalLibraryIcon />
-                &nbsp;{d}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-            <List className="w-100">
-            {['Inbox', 'Starred', 'Send email', 'Drafts','All mail', 'Trash', 'Spam','All mail', 'Trash', 'Spam','All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem  onClick={handleClose(false)}  button key={index}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-            </ListItem>
-            ))}
-            
-            </List>
-
-            </AccordionDetails>
-            </Accordion>
-
-        )) }
-       
-        </>
-    )
 
     const getSidebar = (
-        <ProSidebar className="w-100 ">
-        <SidebarHeader>
-            <div className="text-right text-white d-block d-xl-none pl-2 pl-md-0">
-            <IconButton onClick={handleClose(false)}>
-                    <CloseIcon className="text-white" />
-            </IconButton>
-            </div>
-        </SidebarHeader>
+        <ProSidebar className="w-100" >
+            <SidebarHeader>
+                <div className="text-right text-white d-block d-xl-none pl-2 pl-md-0">
+                <IconButton onClick={handleClose(false)}>
+                        <CloseIcon className="text-white" />
+                </IconButton>
+                </div>
+            </SidebarHeader>
         <SidebarContent>
             <Scrollbars>
-            <Menu iconShape="square" className="pr-2 pr-md-0">
-                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
-                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
-                </SubMenu>
-                
-            </Menu>
-            <Menu iconShape="square" className="pr-2 pr-md-0">
-                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
-                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
-                </SubMenu>
-                
-            </Menu>
-            <Menu iconShape="square" className="pr-2 pr-md-0">
-                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
-                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
-                </SubMenu>
-                
-            </Menu>
-            <Menu iconShape="square" className="pr-2 pr-md-0">
-                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
-                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
-                </SubMenu>
-                
-            </Menu>
-            <Menu iconShape="square" className="pr-2 pr-md-0">
-                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
-                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
-                </SubMenu>
-                
-            </Menu>
-            <Menu iconShape="square" className="pr-2 pr-md-0">
-                <MenuItem icon={<LocalLibraryIcon />}>Dashboard</ MenuItem >
-                <SubMenu title="Components" icon={<LocalLibraryIcon />}>
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
-                </SubMenu>
-                
-            </Menu>
+                <Menu iconShape="square" className="pr-2 pr-md-0">
+                    {
+                        state.papers != [] ?  getPaperList : <div></div>
+                    }   
+                </Menu>
             </Scrollbars>
         </SidebarContent>
         <SidebarFooter>
@@ -155,15 +100,13 @@ function Papers(props) {
 
     return (
         <div className="container-fluid mt-5">
-
+            {/* XL DRAWER */}
             <Drawer 
                 className="d-none d-xl-block position-fixed drawer"
                 variant="permanent"
                 anchor="left"
                 open={state.open}
-                onClose={handleClose(false)}
-            >
-
+                onClose={handleClose(false)}>
                 <Scrollbars className={{
                     overflow: 'auto',
                     marginBottom: '200px'
@@ -171,7 +114,9 @@ function Papers(props) {
                 {getSidebar}
                 </Scrollbars>
             </Drawer>
-
+            
+            {/* END OF XL DRAWER */}
+            {/* DRAWER */}
             <SwipeableDrawer 
                 className="d-block d-xl-none position-fixed drawer"
                 variant="temporary"
@@ -182,9 +127,13 @@ function Papers(props) {
             >
                 {getSidebar}
             </SwipeableDrawer>
+
+            {/* END OF DRAWER */}
             <div className="mt-3 text-left paper-content">
-                <Button onClick={handleClose(true)} className="d-block d-xl-none">Menu</Button>
-                    <h1>{state.paperName}</h1>
+                <Button onClick={handleClose(true)} className="d-block d-xl-none">
+                    Menu
+                </Button>
+                <h1>{state.paperName}</h1>
             </div>
         </div>
     )

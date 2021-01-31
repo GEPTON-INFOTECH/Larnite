@@ -5,7 +5,7 @@ import Carousel, { consts } from "react-elastic-carousel";
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import FunctionsIcon from '@material-ui/icons/Functions';
-import TopicsCard from './TopicsCard';
+import PaperCard from './PaperCard';
 import { useSelector,useDispatch } from 'react-redux';
 import firebase from '../../firebase/firebase';
 import {loginUserAuth} from '../../redux/auth/Actions';
@@ -30,8 +30,11 @@ function CourseChapterCards({ course }) {
         let papers = [];
         for(let i = 0 ; course.papers && i < course.papers?.length ; i++ ) {
             let p = course.papers[i];
-            const t = (await db.collection('Papers').doc(p).get()).data();
-            papers.push(t);
+            const t = (await db.collection('Papers').doc(p).get());
+            papers.push({
+                ...t.data(),
+                id: p
+            });
         }
         setState({
             ...state,
@@ -56,7 +59,7 @@ function CourseChapterCards({ course }) {
     // E
     const paperCard = state?.papers?.map((d,val) => {
         return d != null ? (
-                            <TopicsCard key={val} paper={d} course={course} />
+                            <PaperCard key={val} paper={d} course={course} />
                            ) : (<div></div>)
     });
 

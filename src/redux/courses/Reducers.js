@@ -1,13 +1,17 @@
 import {
     FETCH_COURSES_REQUEST,
     FETCH_COURSES_SUCCESS,
-    FETCH_COURSES_ERROR
+    FETCH_COURSES_ERROR,
+    SET_CURRENT_COURSE,
+    SET_CURRENT_PAPER
 } from './ActionTypes';
 
 const initialState = {
     loading: false,
     error: '',
-    courses: []
+    courses: [],
+    currentCourse: JSON.parse(localStorage.getItem('Current Course')),
+    currentPaper: JSON.parse(localStorage.getItem('Current Paper')) 
 }
 
 const CoursesReducer = (state = initialState,action ) => {
@@ -25,6 +29,16 @@ const CoursesReducer = (state = initialState,action ) => {
             ...state,
             loading: false,
             error: action.payload
+        }
+        case SET_CURRENT_COURSE: return {
+            ...state,
+            loading: false,
+            currentCourse: action.payload
+        }
+        case SET_CURRENT_PAPER: return {
+            ...state,
+            loading: false,
+            currentPaper: action.payload
         }
         default: return state;
     }

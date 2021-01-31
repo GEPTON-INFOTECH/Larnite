@@ -1,7 +1,9 @@
 import {
     FETCH_COURSES_REQUEST,
     FETCH_COURSES_SUCCESS,
-    FETCH_COURSES_ERROR
+    FETCH_COURSES_ERROR,
+    SET_CURRENT_COURSE,
+    SET_CURRENT_PAPER
 } from './ActionTypes';
 import firebase from '../../firebase/firebase';
 
@@ -21,6 +23,21 @@ export const fetchCoursesError = (err) => {
     return {
         type: FETCH_COURSES_ERROR,
         payload: err
+    }
+}
+
+export const setCourse = (course) => {
+    localStorage.setItem('Current Course',JSON.stringify(course));
+    return {
+        type: SET_CURRENT_COURSE,
+        payload: course
+    }
+}
+export const setPaper = (paper) => {
+    localStorage.setItem('Current Paper',JSON.stringify(paper));
+    return {
+        type: SET_CURRENT_PAPER,
+        payload: paper
     }
 }
 

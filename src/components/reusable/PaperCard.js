@@ -1,13 +1,23 @@
 import React from 'react'
-import { Card, CardContent} from '@material-ui/core';
+import { Card, CardContent,Button} from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import Compass from '../../images/compass.png';
 import '../../App.css';
 import AnimateButton from './AnimateButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCourse, setPaper } from '../../redux/courses/Actions';
 
-function TopicsCard({course,paper}) {
+
+function PaperCard({course,paper}) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const setCurrent = () => {
+        dispatch(setCourse(course));
+        dispatch(setPaper(paper));
+        history.push(`papers/${paper.paperName.replace(/\s/g,'-')}`);
+    }
     return (
         <Card className="w-100 mx-0 mx-sm-2 chapter-card shadow">
             <CardContent>
@@ -20,12 +30,10 @@ function TopicsCard({course,paper}) {
                     variant="determinate" 
                     value={40} /> 
                 <p className="text-left mb-2">40% Complete</p>
-                <Link to={`papers/${paper.paperName.replace(/\s/g,'-')}`}>
-                    <AnimateButton text="Read More" />
-                </Link>
+                <AnimateButton text="Read More" handleClick={setCurrent} />
             </CardContent>
         </Card>
     )
 }
 
-export default TopicsCard
+export default PaperCard;
