@@ -1,39 +1,29 @@
 import React,{ useEffect,useState } from 'react'
 import { SwipeableDrawer,Drawer, Button, Toolbar } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import List from '@material-ui/core/List';
 import '../../App.css';
 import { IconButton } from '@material-ui/core';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CloseIcon from '@material-ui/icons/Close';
-import PaperSVG from '../../images/paper.svg';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import { Scrollbars } from 'react-custom-scrollbars';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent,Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import TopicList from '../reusable/TopicList';
 import firebase from '../../firebase/firebase';
-
+import { useHistory } from 'react-router-dom';
+import MenuIcon from '@material-ui/icons/Menu';
 
 function Papers(props) {
     const [state,setState] = useState({
-        paperName: props.match.params.paperName,
+        paperName: props.match.params.paperName.replace(/-/g,' '),
+        home: null,
         open: true,
         expanded:'',
         papers: [],
         course: JSON.parse(localStorage.getItem('Current Course')),
         loading: true
     });
+
+    const history = useHistory();
 
     const handleClose = (b) => event => {
         setState({
@@ -48,6 +38,7 @@ function Papers(props) {
         const coursePapers = JSON.parse(localStorage.getItem('Current Course')).papers;
 
         let p = [];
+        let id = null;
         for(let i = 0 ; i < coursePapers.length ; i++) {
             let paper = (
                         await db.collection('Papers')
@@ -58,20 +49,31 @@ function Papers(props) {
                 ...paper,
                 id: coursePapers[i]
             });
+
+            if(paper.paperName === props.match.params.paperName) {
+                console.log(paper);
+                id = paper.home;
+            }
         }
 
         setState({
             ...state,
-            papers: p
+            papers: p,
+            home: id
         });
     },[]);
 
+    const clickHome = (name) => {
+        history.push(`/papers/${name.replace(/ /g,'-')}`)
+    }
+
     // GET THE LIST OF PAPERS IN SIDEBAR
-    const getPaperList = state.papers.map((d,val) => (
-        <SubMenu title={d.paperName} icon={<LocalLibraryIcon />} key={val}>
-           <TopicList paper={d} course={state.course} />  
-        </SubMenu>      
-    ))
+    const getPaperList = state.papers.map((d,val) =>(
+            <SubMenu title={d.paperName} icon={<LocalLibraryIcon />} key={val}>
+                {d.home && <MenuItem onClick={() => clickHome(d.paperName)}>Home</MenuItem>}
+                <TopicList clickHome={clickHome} paper={d} course={state.course} />  
+            </SubMenu>      
+        ));
 
 
     const getSidebar = (
@@ -99,7 +101,7 @@ function Papers(props) {
     )
 
     return (
-        <div className="container-fluid mt-5">
+        <div className="container-fluid mt-2 mt-xl-5">
             {/* XL DRAWER */}
             <Drawer 
                 className="d-none d-xl-block position-fixed drawer"
@@ -129,12 +131,13 @@ function Papers(props) {
             </SwipeableDrawer>
 
             {/* END OF DRAWER */}
-            <div className="mt-3 text-left paper-content">
-                <Button onClick={handleClose(true)} className="d-block d-xl-none">
-                    Menu
-                </Button>
-                <h1>{state.paperName}</h1>
-            </div>
+            <div className="text-left paper-content">
+                  <Button 
+                      onClick={handleClose(true)} 
+                      className="d-block d-xl-none">
+                      <MenuIcon /> Menu
+                  </Button>
+              </div>
         </div>
     )
 }
