@@ -16,7 +16,12 @@ function PaperCard({course,paper}) {
     const setCurrent = () => {
         dispatch(setCourse(course));
         dispatch(setPaper(paper));
-        history.push(`papers/${paper.paperName.replace(/\s/g,'-')}`);
+        history.push({
+            pathname: `papers/${paper.paperName.replace(/\s/g,'-')}`,
+            state: {
+                id: paper.id
+            }
+        })
     }
     return (
         <Card className="w-100 mx-0 mx-sm-2 chapter-card shadow">

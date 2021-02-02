@@ -9,9 +9,7 @@ import Profile from './components/profile/Profile';
 import Protected from './components/shared/protected/Protected';
 import Courses from './components/courses/Courses';
 import Papers from './components/papers/Papers';
-import TopicContent from './components/papers/TopicContent';
 import ChapterContent from './components/papers/ChapterContent';
-import PaperContent from './components/papers/PaperContent';
 
 function App() {
   return (
@@ -30,11 +28,8 @@ function App() {
                (props) => (
                  <>
                     <Papers {...props} />
-                    {console.log(props)}
                     <div className="text-left paper-content">
-                          <Route path="/papers/:paperName" exact render={(props) => <PaperContent {...props} />} />
-                          <Route path="/papers/:paperName/:topicName" exact render={(props) => <TopicContent {...props} />} />
-                          <Route path="/papers/:paperName/:topicName/:chapterName" exact render={(props) => <ChapterContent {...props} />} />
+                       <Route path="/papers/:paperName" render={(p) => <ChapterContent {...p} />} />
                     </div>
                 </>
                )

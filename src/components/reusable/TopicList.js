@@ -35,8 +35,13 @@ function TopicList({paper,course}) {
         return () => {isSubscribed = false}
     },[]);
 
-    const changeTopic = (url) => {
-        history.push(url);
+    const changeTopic = (d) => {
+        history.push({
+            pathname: `/papers/${paper.paperName.replace(/\s/g,'-')}/${d.topicName.replace(/\s/g,'-')}`,
+            state: {
+                id: d.home
+            }
+        });
     }
 
     const topicList = state?.topics?.map((d,val) => (
@@ -44,7 +49,7 @@ function TopicList({paper,course}) {
             key={val}
             title={d.topicName} 
             icon={<LocalLibraryIcon />}>
-            <MenuItem onClick={() => changeTopic(`/papers/${paper.paperName.replace(/\s/g,'-')}/${d.topicName.replace(/\s/g,'-')}`)} >Home</MenuItem>
+            <MenuItem onClick={() => changeTopic(d)} >Home</MenuItem>
 
             <ChapterList 
                 course={course} 

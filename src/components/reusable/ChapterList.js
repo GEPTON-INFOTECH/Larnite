@@ -39,13 +39,18 @@ function ChapterList({course,paper,topic}) {
     const getURL = (str) => {
         return str.replace(/\s/g,'-');
     }
-    const changeChapter = (url) => {
-        history.push(url);
+    const changeChapter = (d) => {
+        history.push({
+            pathname: `/papers/${getURL(paper.paperName)}/${getURL(topic.topicName)}/${getURL(d.chapterName)}`,
+            state: {
+                id: d.id
+            }
+        });
     }
 
     const chapterlist = state.chapters.map((d,vl) => (
         <MenuItem key={vl} 
-            onClick={() => changeChapter(`/papers/${getURL(paper.paperName)}/${getURL(topic.topicName)}/${getURL(d.chapterName)}`)}>
+            onClick={() => changeChapter(d)}>
                 {d.chapterName}
         </MenuItem>
     ));

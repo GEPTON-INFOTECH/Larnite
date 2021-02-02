@@ -33,6 +33,14 @@ function Papers(props) {
     }
 
     useEffect(async ()=>{
+        if(document.body.clientWidth < 1199){
+            setState({
+                ...state,
+                open: false
+            });
+        }
+
+
         //  GET ALL THE PAPERS OF THE COURSE
         const db = firebase.firestore();
         const coursePapers = JSON.parse(localStorage.getItem('Current Course')).papers;
@@ -63,14 +71,19 @@ function Papers(props) {
         });
     },[]);
 
-    const clickHome = (name) => {
-        history.push(`/papers/${name.replace(/ /g,'-')}`)
+    const clickHome = (d) => {
+        history.push({
+            pathname: `/papers/${d.paperName.replace(/ /g,'-')}`,
+            state: {
+                id: d.home
+            }
+        });
     }
 
     // GET THE LIST OF PAPERS IN SIDEBAR
     const getPaperList = state.papers.map((d,val) =>(
             <SubMenu title={d.paperName} icon={<LocalLibraryIcon />} key={val}>
-                {d.home && <MenuItem onClick={() => clickHome(d.paperName)}>Home</MenuItem>}
+                {d.home && <MenuItem onClick={() => clickHome(d)}>Home</MenuItem>}
                 <TopicList clickHome={clickHome} paper={d} course={state.course} />  
             </SubMenu>      
         ));
