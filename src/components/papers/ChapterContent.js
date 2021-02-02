@@ -8,7 +8,7 @@ function ChapterContent(props) {
         console.log(id);
         const db = firebase.firestore();
         const chapter = (await db.collection('Chapters').doc(id).get()).data();
-        setContent(chapter.content);
+        setContent(chapter?.content);
     }, [props.location.state.id]);
 
 

@@ -19,7 +19,7 @@ function PaperCard({course,paper}) {
         history.push({
             pathname: `papers/${paper.paperName.replace(/\s/g,'-')}`,
             state: {
-                id: paper.id
+                id: paper.home
             }
         })
     }
