@@ -11,6 +11,7 @@ import TopicList from '../reusable/TopicList';
 import firebase from '../../firebase/firebase';
 import { useHistory } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
+import ChapterList from '../reusable/ChapterList';
 
 function Papers(props) {
     const [state,setState] = useState({
@@ -84,7 +85,7 @@ function Papers(props) {
     const getPaperList = state.papers.map((d,val) =>(
             <SubMenu title={d.paperName} icon={<LocalLibraryIcon />} key={val}>
                 {d.home && <MenuItem onClick={() => clickHome(d)}>Home</MenuItem>}
-                <TopicList clickHome={clickHome} paper={d} course={state.course} />  
+                <ChapterList clickHome={clickHome} paper={d} course={state.course} />  
             </SubMenu>      
         ));
 

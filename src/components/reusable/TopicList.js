@@ -5,7 +5,7 @@ import ChapterList from './ChapterList';
 import firebase from '../../firebase/firebase';
 import { Link,useHistory } from 'react-router-dom';
 
-function TopicList({paper,course}) {
+function TopicList({paper,course,chapter}) {
     const [state,setState] = useState({
         topics: [],
         loading: false
@@ -14,7 +14,7 @@ function TopicList({paper,course}) {
 
     useEffect(async ()=>{
         const db = firebase.firestore();
-        const paperTopics = paper.topics;
+        const paperTopics = chapter.topics;
         let t = [];
         let isSubscribed = true;
         for(let i = 0 ; paperTopics && i < paperTopics?.length ; i++ ) {
@@ -37,27 +37,21 @@ function TopicList({paper,course}) {
 
     const changeTopic = (d) => {
         history.push({
-            pathname: `/papers/${paper.paperName.replace(/\s/g,'-')}/${d.topicName.replace(/\s/g,'-')}`,
+            pathname: `/papers/${paper.paperName.replace(/\s/g,'-')}/${chapter.chapterName.replace(/\s/g,'-')}/${d.topicName.replace(/\s/g,'-')}`,
             state: {
-                id: d.home
+                id: d.id
             }
         });
     }
 
-    const topicList = state?.topics?.map((d,val) => (
-        <SubMenu
-            key={val}
-            title={d.topicName} 
-            icon={<LocalLibraryIcon />}>
-            <MenuItem onClick={() => changeTopic(d)} >Home</MenuItem>
-
-            <ChapterList 
-                course={course} 
-                paper={paper}
-                topic={d}
-            />
-        </SubMenu>
+    const topicList = state.topics.map((d,vl) => (
+        <MenuItem key={vl} 
+            onClick={() => changeTopic(d)}>
+                {d.topicName}
+        </MenuItem>
     ));
+
+
 
     return (
         <>

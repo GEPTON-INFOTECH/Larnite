@@ -3,8 +3,9 @@ import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import { Menu,MenuItem, SubMenu } from 'react-pro-sidebar';
 import firebase from '../../firebase/firebase';
 import { Link, useHistory } from 'react-router-dom';
+import TopicList from './TopicList';
 
-function ChapterList({course,paper,topic}) {
+function ChapterList({course,paper}) {
     const [state,setState] = useState({
         chapters: [],
         loading: false
@@ -13,18 +14,19 @@ function ChapterList({course,paper,topic}) {
 
     useEffect(async() => {
         const db = firebase.firestore();
-        const paperChapters = topic.chapters;
+        const paperTopics = paper.chapters;
         let isSubscribed = true;
         let c = [];
-        for(let i = 0 ;paperChapters && i < paperChapters?.length ; i++ ) {
+        for(let i = 0 ;paperTopics && i < paperTopics?.length ; i++ ) {
             const chapter = (await db.collection('Chapters')
-                                     .doc(paperChapters[i])
+                                     .doc(paperTopics[i])
                                      .get())
                                      .data();
             c.push({
                 ...chapter,
-                id: paperChapters[i]
-            });                 
+                id: paperTopics[i]
+            });   
+            console.log(c);              
         }
 
         if(isSubscribed == true)
@@ -41,18 +43,27 @@ function ChapterList({course,paper,topic}) {
     }
     const changeChapter = (d) => {
         history.push({
-            pathname: `/papers/${getURL(paper.paperName)}/${getURL(topic.topicName)}/${getURL(d.chapterName)}`,
+            pathname: `/papers/${getURL(paper.paperName)}/${getURL(d.chapterName)}`,
             state: {
-                id: d.id
+                id: d.home
             }
         });
     }
 
-    const chapterlist = state.chapters.map((d,vl) => (
-        <MenuItem key={vl} 
-            onClick={() => changeChapter(d)}>
-                {d.chapterName}
-        </MenuItem>
+    
+    const chapterlist = state?.chapters?.map((d,val) => (
+        <SubMenu
+            key={val}
+            title={d.chapterName} 
+            icon={<LocalLibraryIcon />}>
+            <MenuItem onClick={() => changeChapter(d)} >Home</MenuItem>
+
+            <TopicList 
+                course={course} 
+                paper={paper}
+                chapter={d}
+            />
+        </SubMenu>
     ));
 
     return (

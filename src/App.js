@@ -29,7 +29,10 @@ function App() {
                  <>
                     <Papers {...props} />
                     <div className="text-left paper-content">
-                       <Route path="/papers/:paperName" render={(p) => <ChapterContent {...p} />} />
+                       <Route path="/papers/:paperName" exact render={(p) => <ChapterContent {...p} />} />
+                       <Route path="/papers/:paperName/:chapterName" exact render={(p) => <ChapterContent {...p} />} />
+                       <Route path="/papers/:paperName/:chapterName/:topicName" exact render={(p) => <ChapterContent {...p} />} />
+
                     </div>
                 </>
                )
