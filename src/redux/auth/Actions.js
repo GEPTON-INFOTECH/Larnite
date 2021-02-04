@@ -5,6 +5,7 @@ import { LOGIN_USER_REQUEST,
          LOGOUT_USER_LOADING,
          LOGOUT_USER_MESSAGE } from './ActionTypes';
 import firebase from '../../firebase/firebase';
+import { fetchStudyMaterials } from '../../redux/courses/Actions';
 
 
 export const loginUserRequest = () => {
@@ -64,6 +65,7 @@ export const loginUser = (phone,history,appVerifier) => {
                             } else {
                                 dispatch(loginUserAuth({},true))
                             }
+                            dispatch(fetchStudyMaterials());
                         })
                         .catch(err => {
                             dispatch(loginUserError(err.message))

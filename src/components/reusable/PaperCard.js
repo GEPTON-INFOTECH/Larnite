@@ -7,21 +7,18 @@ import AnimateButton from './AnimateButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCourse, setPaper } from '../../redux/courses/Actions';
 
 
 function PaperCard({course,paper}) {
     const dispatch = useDispatch();
     const history = useHistory();
     const setCurrent = () => {
-        dispatch(setCourse(course));
-        dispatch(setPaper(paper));
         history.push({
-            pathname: `papers/${paper.paperName.replace(/\s/g,'-')}`,
+            pathname: `/${course.courseName.replace(/\s/g,'-')}/${paper.paperName.replace(/\s/g,'-')}`,
             state: {
                 id: paper.home
             }
-        })
+        });
     }
     return (
         <Card className="w-100 mx-0 mx-sm-2 chapter-card shadow">

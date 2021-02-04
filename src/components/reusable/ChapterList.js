@@ -43,7 +43,7 @@ function ChapterList({course,paper}) {
     }
     const changeChapter = (d) => {
         history.push({
-            pathname: `/papers/${getURL(paper.paperName)}/${getURL(d.chapterName)}`,
+            pathname: `/${course}/${getURL(paper.paperName)}/${getURL(d.chapterName)}`,
             state: {
                 id: d.home
             }

@@ -15,6 +15,7 @@ import ChapterList from '../reusable/ChapterList';
 
 function Papers(props) {
     const [state,setState] = useState({
+        courseName: props.match.params.courseName.replace(/-/g,' '),
         paperName: props.match.params.paperName.replace(/-/g,' '),
         home: null,
         open: true,
@@ -44,7 +45,10 @@ function Papers(props) {
 
         //  GET ALL THE PAPERS OF THE COURSE
         const db = firebase.firestore();
-        const coursePapers = JSON.parse(localStorage.getItem('Current Course')).papers;
+        const coursePapers = (await db.collection('courses').doc(props.match.params.courseName).get())
+                                      .data()
+                                      .papers;
+
 
         let p = [];
         let id = null;
@@ -60,7 +64,6 @@ function Papers(props) {
             });
 
             if(paper.paperName === props.match.params.paperName) {
-                console.log(paper);
                 id = paper.home;
             }
         }
@@ -74,7 +77,7 @@ function Papers(props) {
 
     const clickHome = (d) => {
         history.push({
-            pathname: `/papers/${d.paperName.replace(/ /g,'-')}`,
+            pathname: `/${state.courseName}/${d.paperName.replace(/ /g,'-')}`,
             state: {
                 id: d.home
             }
@@ -85,7 +88,7 @@ function Papers(props) {
     const getPaperList = state.papers.map((d,val) =>(
             <SubMenu title={d.paperName} icon={<LocalLibraryIcon />} key={val}>
                 {d.home && <MenuItem onClick={() => clickHome(d)}>Home</MenuItem>}
-                <ChapterList clickHome={clickHome} paper={d} course={state.course} />  
+                <ChapterList clickHome={clickHome} paper={d} course={state.courseName} />  
             </SubMenu>      
         ));
 

@@ -37,7 +37,7 @@ function TopicList({paper,course,chapter}) {
 
     const changeTopic = (d) => {
         history.push({
-            pathname: `/papers/${paper.paperName.replace(/\s/g,'-')}/${chapter.chapterName.replace(/\s/g,'-')}/${d.topicName.replace(/\s/g,'-')}`,
+            pathname: `/${course}/${paper.paperName.replace(/\s/g,'-')}/${chapter.chapterName.replace(/\s/g,'-')}/${d.topicName.replace(/\s/g,'-')}`,
             state: {
                 id: d.id
             }

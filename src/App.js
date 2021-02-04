@@ -24,14 +24,14 @@ function App() {
             <Protected path="/profile" exact component={Profile} />
             <Protected path="/courses" exact component={Courses} />
             {/* <Protected path="/papers/:paperName" exact component={Papers} /> */}
-            <Route path={['/papers/:paperName']} render={
+            <Route path={['/:courseName/:paperName']} render={
                (props) => (
                  <>
                     <Papers {...props} />
                     <div className="text-left paper-content">
-                       <Route path="/papers/:paperName" exact render={(p) => <ChapterContent {...p} />} />
-                       <Route path="/papers/:paperName/:chapterName" exact render={(p) => <ChapterContent {...p} />} />
-                       <Route path="/papers/:paperName/:chapterName/:topicName" exact render={(p) => <ChapterContent {...p} />} />
+                       <Route path="/:courseName/:paperName" exact render={(p) => <ChapterContent {...p} />} />
+                       <Route path="/:courseName/:paperName/:chapterName" exact render={(p) => <ChapterContent {...p} />} />
+                       <Route path="/:courseName/:paperName/:chapterName/:topicName" exact render={(p) => <ChapterContent {...p} />} />
 
                     </div>
                 </>
