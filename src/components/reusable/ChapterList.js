@@ -4,6 +4,8 @@ import { Menu,MenuItem, SubMenu } from 'react-pro-sidebar';
 import firebase from '../../firebase/firebase';
 import { Link, useHistory } from 'react-router-dom';
 import TopicList from './TopicList';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { useSelector } from 'react-redux';
 
 function ChapterList({course,paper}) {
     const [state,setState] = useState({
@@ -11,6 +13,7 @@ function ChapterList({course,paper}) {
         loading: false
     });
     const history = useHistory();
+    const user = useSelector(state => state.uReducer);
 
     useEffect(async() => {
         const db = firebase.firestore();
@@ -41,6 +44,7 @@ function ChapterList({course,paper}) {
     const getURL = (str) => {
         return str.replace(/\s/g,'-');
     }
+    
     const changeChapter = (d) => {
         history.push({
             pathname: `/${course}/${getURL(paper.paperName)}/${getURL(d.chapterName)}`,
@@ -56,7 +60,10 @@ function ChapterList({course,paper}) {
             key={val}
             title={d.chapterName} 
             icon={<LocalLibraryIcon />}>
-            <MenuItem onClick={() => changeChapter(d)} >Home</MenuItem>
+            <MenuItem onClick={() => changeChapter(d)} >
+                <span style={{fontSize:'13px'}}>Home</span>  
+                { user.user.completedTopics?.includes(d.home) &&  <CheckCircleOutlineIcon style={{float: 'right'}} />}
+            </MenuItem>
 
             <TopicList 
                 course={course} 

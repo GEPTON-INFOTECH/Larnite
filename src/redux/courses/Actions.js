@@ -138,3 +138,47 @@ export const returnContent = (params) => {
     }
     return id;
 }
+
+
+export const getPercentage = async (completedArray,id) => {
+    let total = 0;
+    let completed = 0;
+    const db = firebase.firestore();
+    let paper = await db.collection('Papers').doc(id).get();
+    paper = paper.data();
+    
+    if(paper?.home) total++ ;
+
+    if(paper?.home && completedArray.includes(paper?.home)) {
+        completed++;
+    }
+    const chapters = paper?.chapters;
+
+    if(chapters){
+
+        for(let i = 0 ; i < chapters?.length ; i++ ) {
+            let chapter = await db.collection('Chapters').doc(chapters[i]).get();
+            chapter = chapter?.data();
+            if(chapter?.home) total++;
+    
+            if(chapter?.home &&  completedArray.includes(chapter.home)){
+                completed++;
+            }
+    
+            const topics = chapter?.topics;
+    
+            if(topics) {
+                for(let j = 0 ; j < topics.length ; j++ ) {            
+                    total++;
+                    if(completedArray.includes(topics[j])){
+                        completed++;
+                    }
+                }
+            }
+        }
+    }
+
+    if(total == 0) 
+        return 0;
+    return parseFloat(completed * 100 / total).toFixed(2);
+}

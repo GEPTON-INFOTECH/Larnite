@@ -12,6 +12,8 @@ import firebase from '../../firebase/firebase';
 import { useHistory } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChapterList from '../reusable/ChapterList';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { useSelector } from 'react-redux';
 
 function Papers(props) {
     const [state,setState] = useState({
@@ -24,6 +26,7 @@ function Papers(props) {
         course: JSON.parse(localStorage.getItem('Current Course')),
         loading: true
     });
+    const user = useSelector(state => state.uReducer);
 
     const history = useHistory();
 
@@ -87,7 +90,11 @@ function Papers(props) {
     // GET THE LIST OF PAPERS IN SIDEBAR
     const getPaperList = state.papers.map((d,val) =>(
             <SubMenu title={d.paperName} icon={<LocalLibraryIcon />} key={val}>
-                {d.home && <MenuItem onClick={() => clickHome(d)}>Home</MenuItem>}
+                {d.home && <MenuItem onClick={() => clickHome(d)}>
+                    Home
+                    {console.log(user.user)}
+                    { user.user.completedTopics?.includes(d.home) && <CheckCircleOutlineIcon style={{float: 'right'}} /> }
+                </MenuItem>}
                 <ChapterList clickHome={clickHome} paper={d} course={state.courseName} />  
             </SubMenu>      
         ));
@@ -111,9 +118,9 @@ function Papers(props) {
                 </Menu>
             </Scrollbars>
         </SidebarContent>
-        <SidebarFooter>
+        {/* <SidebarFooter>
           Footer
-        </SidebarFooter>
+        </SidebarFooter> */}
       </ProSidebar>
     )
 

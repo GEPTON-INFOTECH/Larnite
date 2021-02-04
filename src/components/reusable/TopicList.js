@@ -4,6 +4,8 @@ import { Menu,MenuItem, SubMenu } from 'react-pro-sidebar';
 import ChapterList from './ChapterList';
 import firebase from '../../firebase/firebase';
 import { Link,useHistory } from 'react-router-dom';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { useSelector } from 'react-redux';
 
 function TopicList({paper,course,chapter}) {
     const [state,setState] = useState({
@@ -11,6 +13,7 @@ function TopicList({paper,course,chapter}) {
         loading: false
     });
     const history = useHistory();
+    const user = useSelector(state => state.uReducer);
 
     useEffect(async ()=>{
         const db = firebase.firestore();
@@ -47,7 +50,8 @@ function TopicList({paper,course,chapter}) {
     const topicList = state.topics.map((d,vl) => (
         <MenuItem key={vl} 
             onClick={() => changeTopic(d)}>
-                {d.topicName}
+                <span style={{fontSize:'13px'}}>{d.topicName}</span>  
+                { user.user.completedTopics?.includes(d.id) && <CheckCircleOutlineIcon style={{float: 'right'}} /> }
         </MenuItem>
     ));
 

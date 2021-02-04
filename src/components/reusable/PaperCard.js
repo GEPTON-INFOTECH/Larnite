@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useEffect,useState } from 'react'
 import { Card, CardContent,Button} from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import Compass from '../../images/compass.png';
@@ -6,12 +6,17 @@ import '../../App.css';
 import AnimateButton from './AnimateButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPercentage } from '../../redux/courses/Actions';
+import firebase from '../../firebase/firebase';
 
 
 function PaperCard({course,paper}) {
-    const dispatch = useDispatch();
     const history = useHistory();
+    const [state,setState] = useState({
+        percentage: 0
+    })
+    const user = useSelector(state => state.uReducer.user);
     const setCurrent = () => {
         history.push({
             pathname: `/${course.courseName.replace(/\s/g,'-')}/${paper.paperName.replace(/\s/g,'-')}`,
@@ -20,6 +25,15 @@ function PaperCard({course,paper}) {
             }
         });
     }
+
+    useEffect(async () => {
+        const db = firebase.firestore();
+        let percent = await getPercentage(user.completedTopics,paper.id);
+        setState({
+            percentage: parseFloat(percent)
+        })
+    
+    }, [])
     return (
         <Card className="w-100 mx-0 mx-sm-2 chapter-card shadow">
             <CardContent>
@@ -30,8 +44,8 @@ function PaperCard({course,paper}) {
                     style={{height: '10px'}}
                     className="rounded-pill text-left mt-5"
                     variant="determinate" 
-                    value={40} /> 
-                <p className="text-left mb-2">40% Complete</p>
+                    value={state?.percentage} /> 
+                <p className="text-left mb-2">{ state?.percentage } % Complete</p>
                 <AnimateButton text="Read More" handleClick={setCurrent} />
             </CardContent>
         </Card>
