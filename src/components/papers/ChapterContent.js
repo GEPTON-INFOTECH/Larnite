@@ -4,20 +4,30 @@ import firebase from '../../firebase/firebase';
 import { loginUserAuth } from '../../redux/auth/Actions';
 import { fetchStudyMaterials,returnContent } from '../../redux/courses/Actions';
 import SnackbarComponent from '../reusable/SnackbarComponent';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import { Button } from '@material-ui/core';
+import '../../App.css';
+import { useHistory } from 'react-router';
 
 function ChapterContent(props) {
-    const [content,setContent] = useState('');
     const [state,setState] = useState({
         open: false,
-        message: ''
-    })
+        message: '',
+        cur_id: null,
+        queue: [],
+        URL: [],
+        nextLoading: false
+    });
+    const [content,setContent] = useState('');
+
+    const history = useHistory();
     const dispatch = useDispatch();
     const course = useSelector(state => state.cReducer);
     const user = useSelector(state => state.uReducer);
     useEffect(async () => {
         const db = firebase.firestore();
-        let id = props.location.state?.id;
-        console.log(id); 
+        let id = props?.location?.state?.id;
         dispatch(fetchStudyMaterials());
         
         if(id == null){
@@ -26,29 +36,15 @@ function ChapterContent(props) {
         if(id == null) {
             id = course.notFoundID;
         } 
+
+        console.log(id);
+        getCurrentState(id);
+        console.log(id);
+
         const topic = (await db.collection('Topics').doc(id).get()).data();
         setContent(topic?.content);
-
-        // CHECK IF THE USER HAS ALREADY COMPLETED THE TOPIC
-        // SET A TIMEOUT WHICH CAN KEEP TRACK OF COMPLETION OF THE TOPIC BY USER
-        if(!user.user.completedTopics?.includes(id)) {
-            let ct = user.user.completedTopics || [];
-            setTimeout(async () => {
-                ct.push(id);
-                await db.collection('students').doc(user.user.phone).update({
-                    completedTopics: ct 
-                });
-
-                let us = (await db.collection('students').doc(user.user.phone).get()).data();
-
-                dispatch(loginUserAuth(us,false));
-                setState({
-                    open: true,
-                    message: 'Topic Completed'
-                });
-            },30000);
-        }
-        
+        console.log(state);
+ 
     }, [props.location?.state?.id]);
 
 
@@ -63,9 +59,115 @@ function ChapterContent(props) {
         })
     }
 
+    const getCurrentState = (id) => {
+        let courseName = props.match.params.courseName.replace(/-/g,' ');
+        let paperName = props.match.params.paperName.replace(/-/g,' ');
+
+        let contentQueue = JSON.parse(localStorage.getItem('ContentQueue'));
+    
+        let flag = 0;
+        for(let i = 0 ; i < contentQueue.length ; i++ ) {
+            if(contentQueue[i].courseName == courseName) {
+                for(let j = 0 ; j < contentQueue[i].papers.length ; j++ ) {
+                    if(contentQueue[i].papers[j].paperName == paperName){
+                        setState({
+                            ...state,
+                            cur_id: id,
+                            queue: contentQueue[i].papers[j].queue,
+                            URL: contentQueue[i].papers[j].URL
+                        });
+                        flag = 1;
+                        break;
+                    }
+                }
+                if(flag == 1)
+                    break;
+            }
+        }
+        console.log(state);
+    }
+
+    const previousPage = () => {
+        let courseName = props.match.params.courseName.replace(/-/g,' ');
+
+        if(state.cur_id != null){
+            let idx = state.queue.indexOf(`${state.cur_id}`); 
+            if(idx > 0){
+                history.push({
+                    pathname:`/${courseName}/${state.URL[idx-1]}`,
+                    state: {
+                        id: state.queue[idx-1]
+                    }
+                });
+            } 
+        }
+
+
+    }
+
+    const nextPage = async () => {
+        setState({
+            ...state,
+            nextLoading: true
+        })
+
+        let courseName = props.match.params.courseName.replace(/-/g,' ');
+        const db = firebase.firestore();
+        // CHECK IF THE USER HAS ALREADY COMPLETED THE TOPIC
+         // SET A TIMEOUT WHICH CAN KEEP TRACK OF COMPLETION OF THE TOPIC BY USER
+         if(!user.user.completedTopics?.includes(state.cur_id)) {
+             let ct = user.user.completedTopics || [];
+             ct.push(state.cur_id);
+             await db.collection('students').doc(user.user.phone).update({
+                 completedTopics: ct
+             });
+ 
+             let us = (await db.collection('students').doc(user.user.phone).get()).data();
+ 
+             dispatch(loginUserAuth(us,false));
+             setState({
+                 ...state,
+                 open: true,
+                 message: 'Topic Completed'
+             });
+         }
+
+        let idx = state.queue.indexOf(`${state.cur_id}`);
+    
+        console.log(idx);
+            if(idx < state.queue.length - 1){
+                history.push({
+                    pathname:`/${courseName}/${state.URL[idx+1]}`,
+                    state: {
+                        id: state.queue[idx+1]
+                    }
+                });
+            }
+        setState({
+            ...state,
+            nextLoading: false
+        })
+    }
+
     return (
         <>
-        <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose}/>
+        {course?.notFoundID != state?.cur_id && <div className="px-3 mt-2 mt-lg-0">
+            <Button className="theme-background px-2"
+                disabled={state.queue.indexOf(`${state.cur_id}`) == 0}
+                onClick={() => previousPage()}
+            >
+                <KeyboardArrowLeftIcon /> Prev&nbsp;&nbsp;
+            </Button>
+            <Button
+                onClick={() => nextPage()}
+                disabled={state.nextLoading}
+                className="float-right theme-background px-2">
+                &nbsp;&nbsp;{state.queue.indexOf(`${state.cur_id}`) == state.queue.length - 1 ? 'Finish' : 'Next' }
+                <KeyboardArrowRightIcon />
+            </Button>
+        </div>
+        }
+       <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose}/>
         <div className="container-fluid overflow-hidden" dangerouslySetInnerHTML={textToHTML()}>
         </div>
         </>

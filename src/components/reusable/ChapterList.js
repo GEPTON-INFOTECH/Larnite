@@ -60,10 +60,12 @@ function ChapterList({course,paper}) {
             key={val}
             title={d.chapterName} 
             icon={<LocalLibraryIcon />}>
-            <MenuItem onClick={() => changeChapter(d)} >
-                <span style={{fontSize:'13px'}}>Home</span>  
-                { user.user.completedTopics?.includes(d.home) &&  <CheckCircleOutlineIcon style={{float: 'right'}} />}
-            </MenuItem>
+            {d.home && 
+                <MenuItem onClick={() => changeChapter(d)} >
+                    <span style={{fontSize:'13px'}}>Home</span>  
+                    { user.user.completedTopics?.includes(d.home) &&  <CheckCircleOutlineIcon style={{float: 'right'}} />}
+                </MenuItem>
+            }
 
             <TopicList 
                 course={course} 

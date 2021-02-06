@@ -32,7 +32,6 @@ function App() {
                        <Route path="/:courseName/:paperName" exact render={(p) => <ChapterContent {...p} />} />
                        <Route path="/:courseName/:paperName/:chapterName" exact render={(p) => <ChapterContent {...p} />} />
                        <Route path="/:courseName/:paperName/:chapterName/:topicName" exact render={(p) => <ChapterContent {...p} />} />
-
                     </div>
                 </>
                )

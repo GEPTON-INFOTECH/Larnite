@@ -54,6 +54,9 @@ export const fetchStudyMaterials = () => {
     return async dispatch => {
         let user = localStorage.getItem('User');
         const db = firebase.firestore();
+
+        // MAKE A OBJECT FOR STORING PREV & NEXT PAGES
+        let courseContentQueue = [];
         if(user) {
             const c = (await db.collection('courses').get()).docs;
             let courses = [];
@@ -62,10 +65,28 @@ export const fetchStudyMaterials = () => {
                 courses[i] = {...a,papers: [],id: c[i].id};
 
                 let papers = [];
+
+                courseContentQueue[i] = {
+                    courseName: a.courseName,
+                    papers: []
+                }
+                let paperContentQueue = [];
+
                 for(let idx = 0 ; idx < a.papers?.length ; idx++ ) {
                         let p = (await db.collection('Papers').doc(a.papers[idx]).get());
                         let p1 = p.data();
                         papers[idx] = {...p1,chapters:[],id: p.id};
+
+                        paperContentQueue[idx] = {
+                                paperName: p1?.paperName,
+                                queue: [],
+                                URL: []
+                            };
+                        let url = `${p1?.paperName.replace(/\s/g,'-')}`;
+                        if(p1?.home) {
+                            paperContentQueue[idx].queue.push(p1.home);
+                            paperContentQueue[idx].URL.push(url);
+                        }
 
                         let chapters = [];
 
@@ -74,18 +95,31 @@ export const fetchStudyMaterials = () => {
                             let c1 = c.data();
                             chapters[idx2] = {...c1,topics:[],id: c.id};
 
+                            if(c1?.home) {
+                                paperContentQueue[idx].queue.push(c1.home);
+                                paperContentQueue[idx].URL.push(`${url}/${c1.chapterName.replace(/\s/g,'-')}`);
+                            }
                             const topics = [];
                             for(let idx3 = 0 ; idx3 < c1?.topics?.length ; idx3++){
                                     let t = (await db.collection('Topics').doc(c1?.topics[idx3]).get());
                                     let t1 = t.data();
                                     topics[idx3] = {...t1,id: t.id};
+
+                                    if(t?.id) {
+                                        paperContentQueue[idx].queue.push(t.id);
+                                        paperContentQueue[idx].URL.push(`${url}/${c1.chapterName.replace(/\s/g,'-')}/${t1.topicName.replace(/\s/g,'-')}`);
+                                    }
                             };
                             chapters[idx2].topics = topics;
                         };
                         papers[idx].chapters = chapters;
+
+                        
+                        courseContentQueue[i].papers = paperContentQueue;
                 }
                 courses[i].papers = papers;
-                console.log(i,courses[i],papers);
+
+                localStorage.setItem('ContentQueue',JSON.stringify(courseContentQueue));
                 localStorage.setItem('Material',JSON.stringify(courses));
             } 
 
@@ -94,13 +128,13 @@ export const fetchStudyMaterials = () => {
 };
 
 export const returnContent = (params) => {
-    let courseName = params.courseName;
-    let paperName = params.paperName;
-    let chapterName = params.chapterName;
-    let topicName = params.topicName;
+    let courseName = params.courseName?.replace(/-/g,' ');
+    let paperName = params.paperName?.replace(/-/g,' ');
+    let chapterName = params.chapterName?.replace(/-/g,' ');
+    let topicName = params.topicName?.replace(/-/g,' ');
 
     let id = null;
-    const courses = localStorage.getItem('Material');
+    const courses = JSON.parse(localStorage.getItem('Material'));
     if(courses && courseName) {
         for(let i = 0 ; i < courses.length ; i++ ) {
             if(courses[i].courseName === courseName){
@@ -149,7 +183,7 @@ export const getPercentage = async (completedArray,id) => {
     
     if(paper?.home) total++ ;
 
-    if(paper?.home && completedArray.includes(paper?.home)) {
+    if(paper?.home && completedArray && completedArray.includes(paper?.home)) {
         completed++;
     }
     const chapters = paper?.chapters;
@@ -161,7 +195,7 @@ export const getPercentage = async (completedArray,id) => {
             chapter = chapter?.data();
             if(chapter?.home) total++;
     
-            if(chapter?.home &&  completedArray.includes(chapter.home)){
+            if(chapter?.home &&  completedArray?.includes(chapter.home)){
                 completed++;
             }
     
@@ -170,7 +204,7 @@ export const getPercentage = async (completedArray,id) => {
             if(topics) {
                 for(let j = 0 ; j < topics.length ; j++ ) {            
                     total++;
-                    if(completedArray.includes(topics[j])){
+                    if(completedArray?.includes(topics[j])){
                         completed++;
                     }
                 }
@@ -182,3 +216,4 @@ export const getPercentage = async (completedArray,id) => {
         return 0;
     return parseFloat(completed * 100 / total).toFixed(2);
 }
+
