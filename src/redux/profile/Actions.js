@@ -43,15 +43,13 @@ export const updateProfile =  (state,phone) => {
         let student = await db.collection('students').doc(phone).get();
 
         if(student.data() == null) {
-            const cover = (await db.collection('covers')
-                            .get()).docs[0].data();
             const avatar = (await db.collection('avatars')
                             .get()).docs[0].data();
             // INSERT DATA INTO FIRESTORE
             await db.collection('students')
                 .doc(phone)
                 .set({
-                    cover: cover.URL,
+                    cover: avatar.cover,
                     avatar: avatar.URL
                 },{merge: true});
         }

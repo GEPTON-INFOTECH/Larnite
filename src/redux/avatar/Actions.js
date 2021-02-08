@@ -79,24 +79,15 @@ export const fetchAvatar = () => {
         try {
             let result = [];
             let av = [];
-            let co = [];
-            let ids = [];
+            
             const db = firebase.firestore();
             const avatars = await db.collection('avatars').get();
-            av = avatars.docs.map(a => {
-                ids.push(a.id);
-                return a.data()
-            });
+            av = avatars.docs.map(a => a.data());
 
-            for(let i = 0 ; i < ids.length ; i++ ) {
-                let c = await db.collection('covers').doc(ids[i]).get();
-                co.push(c.data());
-            }
-
-            for(let i = 0 ; i < co.length ; i++ ) {
+            for(let i = 0 ; i < av.length ; i++ ) {
                 result.push({
-                    avatar: av[i],
-                    cover: co[i]
+                    avatar: {URL: av[i].URL},
+                    cover: {URL: av[i].cover}
                 });
             }
 
