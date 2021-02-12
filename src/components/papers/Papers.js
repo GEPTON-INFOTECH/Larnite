@@ -156,12 +156,6 @@ function Papers(props) {
 
             {/* END OF DRAWER */}
             <div className="text-left paper-content">
-            <br />
-                <div class="mt-5 mt-md-0">
-                   <br/>
-                   <br/>
-                   <br/>
-                </div>
                   <Button 
                       onClick={handleClose(true)} 
                       className="d-block d-xl-none">

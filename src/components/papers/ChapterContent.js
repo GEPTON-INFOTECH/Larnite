@@ -169,7 +169,6 @@ function ChapterContent(props) {
         }
        <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose}/>
   
-
         <div id="content" className="container-fluid content-element mt-2 mb-3" dangerouslySetInnerHTML={textToHTML()} >
 
         </div>
