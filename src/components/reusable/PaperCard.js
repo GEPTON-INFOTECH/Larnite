@@ -11,7 +11,7 @@ import { getPercentage } from '../../redux/courses/Actions';
 import firebase from '../../firebase/firebase';
 
 
-function PaperCard({course,paper}) {
+function PaperCard({course,paper,readMore}) {
     const history = useHistory();
     const [state,setState] = useState({
         percentage: 0
@@ -46,7 +46,7 @@ function PaperCard({course,paper}) {
                     variant="determinate" 
                     value={state?.percentage} /> 
                 <p className="text-left mb-2">{ state?.percentage } % Complete</p>
-                <AnimateButton text="Read More" handleClick={setCurrent} />
+                {!readMore && <AnimateButton text="Read More" handleClick={setCurrent} />}
             </CardContent>
         </Card>
     )

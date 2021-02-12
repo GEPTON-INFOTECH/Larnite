@@ -9,6 +9,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { Button } from '@material-ui/core';
 import '../../App.css';
 import { useHistory } from 'react-router';
+import $ from 'jquery';
 
 function ChapterContent(props) {
     const [state,setState] = useState({
@@ -37,15 +38,14 @@ function ChapterContent(props) {
             id = course.notFoundID;
         } 
 
-        console.log(id);
         getCurrentState(id);
-        console.log(id);
 
         const topic = (await db.collection('Topics').doc(id).get()).data();
-        setContent(topic?.content);
-        console.log(state);
- 
+        setContent(`<div className="container-fluid w-100">${topic?.content}</div>`);
+
+       
     }, [props.location?.state?.id]);
+
 
 
     const textToHTML = () => {
@@ -151,8 +151,8 @@ function ChapterContent(props) {
 
     return (
         <>
-        {course?.notFoundID != state?.cur_id && <div className="px-3 mt-2 mt-lg-0">
-            <Button className="theme-background px-2"
+        {course?.notFoundID != state?.cur_id && <div className="px-3 mt-5 mt-lg-0">
+            <Button className="theme-background px-2 mt-2 mt-lg-0"
                 disabled={state.queue.indexOf(`${state.cur_id}`) == 0}
                 onClick={() => previousPage()}
             >
@@ -161,14 +161,17 @@ function ChapterContent(props) {
             <Button
                 onClick={() => nextPage()}
                 disabled={state.nextLoading}
-                className="float-right theme-background px-2">
+                className="float-right theme-background px-2 mt-2 mt-lg-0">
                 &nbsp;&nbsp;{state.queue.indexOf(`${state.cur_id}`) == state.queue.length - 1 ? 'Finish' : 'Next' }
                 <KeyboardArrowRightIcon />
             </Button>
         </div>
         }
        <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose}/>
-        <div className="container-fluid overflow-hidden" dangerouslySetInnerHTML={textToHTML()}>
+  
+
+        <div id="content" className="container-fluid content-element mt-2 mb-3" dangerouslySetInnerHTML={textToHTML()} >
+
         </div>
         </>
     )

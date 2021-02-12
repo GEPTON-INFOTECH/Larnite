@@ -48,7 +48,7 @@ function Papers(props) {
 
         //  GET ALL THE PAPERS OF THE COURSE
         const db = firebase.firestore();
-        const coursePapers = (await db.collection('courses').doc(props.match.params.courseName).get())
+        const coursePapers = (await db.collection('courses').doc(props.match.params.courseName.replace(/-/g,' ')).get())
                                       .data()
                                       .papers;
 
@@ -156,6 +156,12 @@ function Papers(props) {
 
             {/* END OF DRAWER */}
             <div className="text-left paper-content">
+            <br />
+                <div class="mt-5 mt-md-0">
+                   <br/>
+                   <br/>
+                   <br/>
+                </div>
                   <Button 
                       onClick={handleClose(true)} 
                       className="d-block d-xl-none">

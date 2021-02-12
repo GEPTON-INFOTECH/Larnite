@@ -51,7 +51,7 @@ function Navbar() {
 
     return (
         <div className="Navbar shadow p-3">
-            <nav className="navbar navbar-expand-md navbar-light sticky-top">
+            <nav className="navbar navbar-expand-md navbar-light ">
                     {/* NAVBAR LOGO */}
                     <a className="navbar-brand" href="/" target="_blank">
                         Pymaths

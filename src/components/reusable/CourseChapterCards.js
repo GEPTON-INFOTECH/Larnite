@@ -59,7 +59,9 @@ function CourseChapterCards({ course }) {
     // E
     const paperCard = state?.papers?.map((d,val) => {
         return d != null ? (
-                            <PaperCard key={val} paper={d} course={course} />
+                            <PaperCard key={val} paper={d} course={course} readMore={(!user.user?.enrolled || 
+                                (   user.user.enrolled &&
+                                     !user.user?.enrolled.includes(course.id)))} />
                            ) : (<div></div>)
     });
 
