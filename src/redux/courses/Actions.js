@@ -28,7 +28,7 @@ export const fetchCoursesError = (err) => {
 
 
 
-export const fetchCourses = (phone) => {
+export const fetchCourses = (userCourse) => {
     return async dispatch => {
         try {
             dispatch(fetchCoursesRequest());
@@ -39,7 +39,8 @@ export const fetchCourses = (phone) => {
 
             for(let i = 0 ; i < c.length ; i++ ) {
                 const a = await c[i].data();
-                courses[i] = {...a,id: c[i].id};
+                if(userCourse.includes(a.courseName))
+                    courses[i] = {...a,id: c[i].id};
             }
             dispatch(fetchCoursesSuccess(courses));
 

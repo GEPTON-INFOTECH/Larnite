@@ -6,14 +6,14 @@ import { fetchCourses } from '../../redux/courses/Actions';
 
 function Courses() {
     const dispatch = useDispatch();
-    const courses = useSelector(state => state.cReducer)
+    const courses = useSelector(state => state.cReducer);
+    const user = useSelector(state => state.uReducer);
 
     useEffect(()=>{
-        dispatch(fetchCourses());
+        dispatch(fetchCourses(user.user.course));
     },[]);
 
     const getCoursesHTML = courses.courses.map((d,val) => {
-        console.log(d);
         return d != null ? (
                         <CourseChapterCards key={val} course={d} />
                      ) : (<></>)
