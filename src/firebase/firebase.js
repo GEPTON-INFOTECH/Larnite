@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import 'firebase/messaging';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCqdDrx9Yx8rJZ6oX8MR48iIarRKOO3wfU",
@@ -10,6 +11,6 @@ const firebaseConfig = {
     measurementId: "G-YW46ZKH3SN"
   };
 
-  firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-  export default firebase;
+export default firebase;
