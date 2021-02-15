@@ -339,3 +339,8 @@ label.checkLabel .avatar-demo {
 .drawer {
     position: relative !important;
 }
+
+
+.paper-card-height {
+    margin-top: -80px !important;
+}

@@ -3,6 +3,7 @@ import CourseChapterCards from '../reusable/CourseChapterCards'
 import '../../App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCourses } from '../../redux/courses/Actions';
+import { Button } from '@material-ui/core';
 
 function Courses() {
     const dispatch = useDispatch();
@@ -20,16 +21,22 @@ function Courses() {
     });
 
     return (
-        <div className="mt-5">
-            <div className="container mt-5">
-                        <h2 className="heading-underline pt-5">TRAINING</h2>
-                        <p className="text-left course-content">
+        <div className="mx-0">
+            <div className="container-fluid jumbotron bg-dark">
+                <div className="container">
+                        <h2 className="heading-underline pt-5 text-white">TRAINING</h2>
+                        <p className="text-left course-content text-white">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, vel, sed laborum, at recusandae magni maxime debitis voluptate corporis est fugiat. Corrupti asperiores natus ratione, quos assumenda quasi illo inventore!
                         </p>
+                        <Button variant="contained" className="mt-3">View Courses</Button>
+                </div> 
             </div>
 
-            <div className="container-fluid mt-5 pt-5">
-                { courses && courses.courses != null ? getCoursesHTML : '' }
+            <div className="container-fluid mx-0 px-0">
+                { 
+                    getCoursesHTML
+                
+                }
             </div>
 
         </div>

@@ -1,7 +1,5 @@
 import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import AvatarImage from '../../images/avatars/avatar/Avatar2.jpg';
-import AvatarBG from '../../images/avatars/cover/Avatar2bg.jpg';
 import '../../App.css';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import TextFieldComponent from '../reusable/TextFieldComponent';
@@ -200,7 +198,7 @@ function Profile(props) {
                 <div className="col-md-5 col-12 mt-3">
                     <div className="row">
                         <div className="col-md-12 col-sm-12 col-12 position-relative mt-5">
-                            <AvatarComponent bg={user.user?.cover} image={user.user?.avatar} />
+                            <AvatarComponent bg={user.user?.cover} image={user.user?.avatar} /> 
                             <br />
                             <br />
                             <br />

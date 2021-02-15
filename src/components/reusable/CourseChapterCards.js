@@ -11,6 +11,8 @@ import firebase from '../../firebase/firebase';
 import {loginUserAuth} from '../../redux/auth/Actions';
 import SnackbarComponent from './SnackbarComponent';
 import Spinner from './Spinner';
+import Skeleton from '@material-ui/lab/Skeleton';
+
 
 function CourseChapterCards({ course }) {
     const user = useSelector(state => state.uReducer);
@@ -21,7 +23,8 @@ function CourseChapterCards({ course }) {
         papers: [],
         loading: false,
         open: false,
-        message: ''
+        message: '',
+        skel: true
     });
 
     useEffect(async () => {
@@ -38,7 +41,8 @@ function CourseChapterCards({ course }) {
         }
         setState({
             ...state,
-            papers: papers
+            papers: papers,
+            skel: false
         });
     }, [])
 
@@ -90,6 +94,10 @@ function CourseChapterCards({ course }) {
         });
 
     }
+
+    const returnSKEL = [1,2,3,4].map( x => (
+        <Skeleton variant="rect" className="w-100 mx-3" height="200px" animation="wave"/>
+    ))
         
     const handleClose = () => {
         setState({
@@ -99,47 +107,83 @@ function CourseChapterCards({ course }) {
         })
     }
     return (
-        <div className="mt-5 mx-0 mx-sm-2">
+        <div className="mt-5 px-0 mb-5 pb-5">
             <SnackbarComponent open={state.open} handleClose={handleClose} message={state.message}/>
-            <>
-            <h2 style={{ textAlign: "left" }} className="name-color pl-0 pl-md-3">
-                <span className="heading-underline">{ course.courseName }</span> &nbsp;
-                {
-                        (!user.user?.enrolled || 
-                            (   user.user.enrolled &&
-                                 !user.user?.enrolled.includes(course.id))) ?
-                        <Button 
-                            disabled={state.loading} 
-                            onClick={enrollCourse} 
-                            variant="contained" 
-                            className="theme-background"
-                            color="primary">
-                                Enroll Now
-                        </Button> : ''
-                }
-                { state.loading && <CircularProgress size={24} style={{
-                    top: '50%',
-                    left: '50%'
-                    }} />}
-            </h2>
-            <p className="text-left pl-0 pl-md-3 mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto at obcaecati perferendis soluta quisquam consectetur amet repellendus vitae doloremque blanditiis, cumque nostrum aliquam eveniet porro, necessitatibus ullam. Dolores, est vitae.
-            </p>
-            <div className="mt-3">
-                    { (course.papers == null || course.papers.length == 0) ? 
-                            <Card className="text-left">
-                                <CardContent>
-                                    <h3>We are working on the resources</h3>
-                                </CardContent>
-                            </Card>
-                        :
-                        <Carousel className="mx-0 px-0" renderArrow={myArrow} breakPoints={breakPoints}>
-                                 {state.papers != [] ? paperCard : <div></div>}
-                        </Carousel>
+            {state.skel == false ? <>
+                <div className="jumbotron bg-dark text-white">
+                <h2 style={{ textAlign: "left" }} className="name-color pl-0 pl-md-3">
+                    <span className="heading-underline text-white">{ course.courseName }</span> &nbsp;
+                    {
+                            (!user.user?.enrolled || 
+                                (   user.user.enrolled &&
+                                    !user.user?.enrolled.includes(course.id))) ?
+                            <Button 
+                                disabled={state.loading} 
+                                onClick={enrollCourse} 
+                                variant="contained" 
+                                >
+                                    Enroll Now
+                            </Button> : ''
                     }
+                    { state.loading && <CircularProgress size={24} style={{
+                        top: '50%',
+                        left: '50%'
+                        }} />}
+                </h2>
+                <p className="text-left pl-0 pl-md-3 mt-3 pb-5">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto at obcaecati perferendis soluta quisquam consectetur amet repellendus vitae doloremque blanditiis, cumque nostrum aliquam eveniet porro, necessitatibus ullam. Dolores, est vitae.
+                </p>
+                </div>
 
-            </div>
-            </>
+                <div className="paper-card-height">
+                        { ((course.papers == null || course.papers.length == 0) && state.skel == false) ? 
+                                <Card className="text-left">
+                                    <CardContent>
+                                        <h3>We are working on the resources</h3>
+                                    </CardContent>
+                                </Card>
+                            :
+                            
+                            <Carousel pagination={false} showEmptySlots className="mx-0 px-0" renderArrow={myArrow} breakPoints={breakPoints}>
+                                    {
+                                    state.skel == false ? paperCard : <div></div>
+                                    }
+                            </Carousel>
+                        }
+
+                </div>
+                </>: 
+                <>
+                <div className="jumbotron text-white">
+                <h2 style={{ textAlign: "left" }} className="name-color pl-0 pl-md-3 d-flex">
+                        <Skeleton width="250px" height="50px"/>&nbsp;
+                        <Skeleton width="100px" height="50px"/>
+                </h2>
+                <p className="text-left pl-0 pl-md-3 pb-5">
+                        <Skeleton height="100px"/>
+                </p>
+                </div>
+
+                <div className="paper-card-height">
+                        { ((course.papers == null || course.papers.length == 0) && state.skel == false) ? 
+                                <Card className="text-left">
+                                    <CardContent>
+                                        <h3>We are working on the resources</h3>
+                                    </CardContent>
+                                </Card>
+                            :
+                            
+                            <Carousel pagination={false} showEmptySlots className="mx-0 px-0" renderArrow={myArrow} breakPoints={breakPoints}>
+                                    {
+                                    state.skel == false ? paperCard : 
+                                    returnSKEL
+                                    }
+                            </Carousel>
+                        }
+
+                </div>
+                </>
+            }
         </div>
     )
 }

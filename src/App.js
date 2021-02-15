@@ -20,26 +20,23 @@ function App() {
   const dispatch = useDispatch();
   useEffect(async ()=>{
     try {
-      if(user.user && !user.user.deviceToken){
         const messaging = firebase.messaging();
         let token = await messaging.getToken({vapidKey: serverKey});
         // CHECK IF AUTHENTICATED & SEND IT TO DB TO STORE AS deviceToken
         if(token) {
           console.log('Current Token is: ',token);
-          const db = firebase.firestore().collection('students');
-          await db.doc(user.user.phone).update({
-            deviceToken: token
-          });
-          let userData = (await db.doc(user.user.phone).get()).data();
-          dispatch(loginUserAuth(userData,false));
-        }
+            const db = firebase.firestore().collection('students');
+            await db.doc(user.user.phone).update({
+              deviceToken: token
+            });
+            let userData = (await db.doc(user.user.phone).get()).data();
+            dispatch(loginUserAuth(userData,false));
       }
     } catch(e){
       console.log(e);
       console.log('Error Occured');
     }
-
-  },[user]);
+  },[]);
 
   return (
     <BrowserRouter>

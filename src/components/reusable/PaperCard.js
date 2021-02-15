@@ -35,18 +35,20 @@ function PaperCard({course,paper,readMore}) {
     
     }, [])
     return (
-        <Card className="w-100 mx-0 mx-sm-2 chapter-card shadow">
+        <Card className="w-100 mx-0 mx-sm-2 chapter-card shadow text-left">
             <CardContent>
-                <h4 className="chapter-title pb-0 mb-0 mt-2">
+                <h4 className="chapter-title pb-0 mb-0 mt-2 text-dark">
                    { paper.paperName }
                 </h4>
                 <LinearProgress 
-                    style={{height: '10px'}}
-                    className="rounded-pill text-left mt-5"
+                    style={{height: '7px'}}
+                    className="rounded-pill text-left mt-4"
                     variant="determinate" 
                     value={state?.percentage} /> 
-                <p className="text-left mb-2">{ state?.percentage } % Complete</p>
-                {!readMore && <AnimateButton text="Read More" handleClick={setCurrent} />}
+                <small className="text-left mb-2">{ state?.percentage } % Complete</small><br />
+                {/* {!readMore && <AnimateButton text="Read More" handleClick={setCurrent} />} */}
+                {!readMore && <Button variant="contained" className="mt-4 bg-dark text-white" onClick={setCurrent} >Read More</Button>}
+
             </CardContent>
         </Card>
     )
