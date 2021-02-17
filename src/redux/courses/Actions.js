@@ -116,6 +116,7 @@ export const fetchStudyMaterials = () => {
                                         paperContentQueue[idx].URL.push(`${url}/${c1.chapterName.replace(/\s/g,'-')}/${t1.topicName.replace(/\s/g,'-')}`);
                                     }
                             };
+                            console.log(topics);
                             chapters[idx2].topics = topics;
                         };
                         papers[idx].chapters = chapters;

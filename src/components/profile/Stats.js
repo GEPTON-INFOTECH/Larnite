@@ -43,14 +43,10 @@ function Stats({user}) {
                     totalXP: 0
                 };
     
-    
-                // let course = await fetchOne(enrolled[idx],'courses');
-                console.log('Hello',material[i]);
                 current_course.courseName = material[i].courseName;
                 let papers = material[i].papers;
                 if(papers){
                     for(let j = 0 ; j < papers.length ; j++ ) {
-                        // let paper = await fetchOne(papers[j],'Papers');
                         let paper = papers[j];
 
                         if(paper.home){
@@ -63,8 +59,8 @@ function Stats({user}) {
                         let chapters = paper.chapters;
                         if(chapters){
                             for(let k = 0 ; k < chapters.length ; k++ ) {
-                                let chapter = await fetchOne(chapters[k].id,'Chapters');
-
+                                // let chapter = await fetchOne(chapters[k].id,'Chapters');
+                                let chapter = chapters[k];
                                 if(chapter.home){
                                     let topic = await fetchOne(chapter.home,'Topics');
                                     current_course.totalXP += parseInt(topic.experiencePoints || 0)
@@ -75,7 +71,9 @@ function Stats({user}) {
     
                                 let topics = chapter.topics;
                                 for(let l = 0 ; l < topics.length ; l++ ) {
-                                    let topic = await fetchOne(topics[l],'Topics');
+                                    // let topic = await fetchOne(topics[l],'Topics');
+                                    let topic = topics[l];
+
                                     current_course.totalXP += parseInt(topic.experiencePoints || 0)
                                     if(user.completedTopics.indexOf(topic.id) != -1) {
                                         current_course.completedXP += parseInt(topic.experiencePoints || 0)
