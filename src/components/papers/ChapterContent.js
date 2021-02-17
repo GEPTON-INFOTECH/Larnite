@@ -11,6 +11,7 @@ import '../../App.css';
 import { useHistory } from 'react-router';
 import $ from 'jquery';
 import ReactMarkdown from 'react-markdown'
+import Finish from './Finish';
 
 function ChapterContent(props) {
     const [state,setState] = useState({
@@ -19,7 +20,9 @@ function ChapterContent(props) {
         cur_id: null,
         queue: [],
         URL: [],
-        nextLoading: false
+        nextLoading: false,
+        finish: false,
+        chapterName: ''
     });
     const [content,setContent] = useState('');
 
@@ -132,8 +135,7 @@ function ChapterContent(props) {
          }
 
         let idx = state.queue.indexOf(`${state.cur_id}`);
-    
-        console.log(idx);
+         let finish = false;
             if(idx < state.queue.length - 1){
                 history.push({
                     pathname:`/${courseName}/${state.URL[idx+1]}`,
@@ -141,16 +143,19 @@ function ChapterContent(props) {
                         id: state.queue[idx+1]
                     }
                 });
+            } else {
+                finish = true;
             }
         setState({
             ...state,
-            nextLoading: false
+            nextLoading: false,
+            finish: finish
         })
     }
 
     return (
         <>
-        {course?.notFoundID != state?.cur_id && <div className="px-3 mt-5 mt-lg-0">
+        {course?.notFoundID != state?.cur_id && !state.finish && <div className="px-3 mt-5 mt-lg-0">
             <Button className="theme-background px-2 mt-2 mt-lg-0"
                 disabled={state.queue.indexOf(`${state.cur_id}`) == 0}
                 onClick={() => previousPage()}
@@ -168,9 +173,14 @@ function ChapterContent(props) {
         }
        <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose}/>
   
-        <div id="content" className="container-fluid content-element mt-2 mb-3 text-left"  >
-            <ReactMarkdown>{content}</ReactMarkdown>
-        </div>
+        { 
+        !state.finish ? 
+            <div id="content" className="container-fluid content-element mt-2 mb-3 text-left"  >
+                <ReactMarkdown>{content}</ReactMarkdown>
+            </div>
+            :
+            <Finish />
+        }
         </>
     )
 }

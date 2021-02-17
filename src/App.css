@@ -344,3 +344,9 @@ label.checkLabel .avatar-demo {
 .paper-card-height {
     margin-top: -80px !important;
 }
+
+
+.finish-title{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 2px;
+}

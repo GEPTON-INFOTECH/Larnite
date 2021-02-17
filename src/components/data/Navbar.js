@@ -14,7 +14,7 @@ export const NavItems = [
         icon: <MenuBookIcon />
     },
     {
-        title: 'PAYMENTS',
+        title: 'PROFILE',
         link: '/profile',
         icon: <PaymentIcon />
     }

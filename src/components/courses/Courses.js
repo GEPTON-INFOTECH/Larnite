@@ -28,7 +28,6 @@ function Courses() {
                         <p className="text-left course-content text-white">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, vel, sed laborum, at recusandae magni maxime debitis voluptate corporis est fugiat. Corrupti asperiores natus ratione, quos assumenda quasi illo inventore!
                         </p>
-                        <Button variant="contained" className="mt-3">View Courses</Button>
                 </div> 
             </div>
 
