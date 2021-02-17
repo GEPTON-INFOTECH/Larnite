@@ -14,6 +14,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChapterList from '../reusable/ChapterList';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { useSelector } from 'react-redux';
+import 'react-pro-sidebar/dist/css/styles.css';
+
 
 function Papers(props) {
     const [state,setState] = useState({
@@ -140,6 +142,7 @@ function Papers(props) {
                 {getSidebar}
                 </Scrollbars>
             </Drawer>
+
             
             {/* END OF XL DRAWER */}
             {/* DRAWER */}

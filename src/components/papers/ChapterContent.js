@@ -10,6 +10,7 @@ import { Button } from '@material-ui/core';
 import '../../App.css';
 import { useHistory } from 'react-router';
 import $ from 'jquery';
+import ReactMarkdown from 'react-markdown'
 
 function ChapterContent(props) {
     const [state,setState] = useState({
@@ -41,7 +42,7 @@ function ChapterContent(props) {
         getCurrentState(id);
 
         const topic = (await db.collection('Topics').doc(id).get()).data();
-        setContent(`<div className="container-fluid w-100">${topic?.content}</div>`);
+        setContent(`${topic?.content}`);
 
        
     }, [props.location?.state?.id]);
@@ -101,8 +102,6 @@ function ChapterContent(props) {
                 });
             } 
         }
-
-
     }
 
     const nextPage = async () => {
@@ -169,8 +168,8 @@ function ChapterContent(props) {
         }
        <SnackbarComponent open={state.open} message={state.message} handleClose={handleClose}/>
   
-        <div id="content" className="container-fluid content-element mt-2 mb-3" dangerouslySetInnerHTML={textToHTML()} >
-
+        <div id="content" className="container-fluid content-element mt-2 mb-3 text-left"  >
+            <ReactMarkdown>{content}</ReactMarkdown>
         </div>
         </>
     )
