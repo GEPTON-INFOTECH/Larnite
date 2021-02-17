@@ -58,11 +58,13 @@ export const fetchStudyMaterials = () => {
 
         // MAKE A OBJECT FOR STORING PREV & NEXT PAGES
         let courseContentQueue = [];
+
         if(user) {
             const c = (await db.collection('courses').get()).docs;
             let courses = [];
             for(let i = 0 ; i < c.length ; i++ ) {
                 const a = c[i].data();
+
                 courses[i] = {...a,papers: [],id: c[i].id};
 
                 let papers = [];
@@ -76,6 +78,9 @@ export const fetchStudyMaterials = () => {
                 for(let idx = 0 ; idx < a.papers?.length ; idx++ ) {
                         let p = (await db.collection('Papers').doc(a.papers[idx]).get());
                         let p1 = p.data();
+
+
+            
                         papers[idx] = {...p1,chapters:[],id: p.id};
 
                         paperContentQueue[idx] = {

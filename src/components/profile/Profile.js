@@ -11,6 +11,7 @@ import { closeSnack, fetchUser, updateProfile, updateBio } from '../../redux/pro
 import SnackbarComponent from '../reusable/SnackbarComponent';
 import DialogComponent from '../reusable/DialogComponent';
 import AvatarComponent from '../reusable/AvatarComponent';
+import Stats from './Stats';
 
 function Profile(props) {
     const [state,setState] = useState({
@@ -28,7 +29,7 @@ function Profile(props) {
     const user = useSelector(state => state.uReducer);
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    useEffect(async () => {
         setState({
             ...state,
             firstName: user.user.firstName,
@@ -42,6 +43,7 @@ function Profile(props) {
         if(user.isLoggedIn == false) {
             props.history.push('/');
         }
+
     },[]);
 
     const handleChange = ($event) => {
@@ -279,11 +281,7 @@ function Profile(props) {
 
 
                     {/* EXP CARD */}
-                    <Card className="mt-5 mb-5">
-                        <CardContent>
-                        Still working on it
-                        </CardContent>
-                    </Card>
+                    <Stats user={user?.user}/>
                     {/* END OF EXP CARD */}
 
                     {/* PROFILE UPDATE CARD */}
