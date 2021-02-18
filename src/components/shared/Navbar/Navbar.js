@@ -11,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import EditIcon from '@material-ui/icons/Edit';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
+import NavBrand from '../../../images/logos/horizontal-logo-without-background.png';
 
 function Navbar() {
     
@@ -53,8 +54,8 @@ function Navbar() {
         <div className="Navbar shadow p-3">
             <nav className="navbar navbar-expand-md navbar-light ">
                     {/* NAVBAR LOGO */}
-                    <a className="navbar-brand" href="/" target="_blank">
-                        Pymaths
+                    <a className="navbar-brand py-0" href="/" target="_blank">
+                        <img src={NavBrand} style={{height: '50px'}}/>
                     </a>	
                     {/* END OF NAVBAR LOGO */}
                     {/* TOGGLER BUTTON */}
