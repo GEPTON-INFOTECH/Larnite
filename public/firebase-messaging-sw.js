@@ -32,6 +32,6 @@ self.addEventListener('notificationclick',function (event){
     var action_click = event.notification.data.click_action;
     event.notification.close();
 
-      clients.openWindow(action_click)
+    clients.openWindow(action_click)
 });
 

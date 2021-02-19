@@ -13,6 +13,7 @@ import 'firebase/messaging';
 import firebase from './firebase/firebase';
 import React,{useEffect} from 'react';
 import { loginUserAuth } from './redux/auth/Actions';
+import Notifications from './components/notifications/Notifications';
 
 function App() {
   const serverKey = 'BIbdqnrxb-Kijs9iQTPV1gOZSw-9GYR4u3INSELX20fXs-KusVx5NzJzmUkw_-ERa-E5OdGamyRYn9XaAAPxNuA';
@@ -50,6 +51,7 @@ function App() {
             <Route path="/signin" exact component={Auth}/>
             <Protected path="/profile" exact component={Profile} />
             <Protected path="/courses" exact component={Courses} />
+            <Protected path="/notifications" exact component={Notifications} />
 
             {/* <Protected path="/papers/:paperName" exact component={Papers} /> */}
             <Route  path={['/:courseName/:paperName']} render={

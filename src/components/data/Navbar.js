@@ -1,6 +1,6 @@
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import PaymentIcon from '@material-ui/icons/Payment';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 
 export const NavItems = [
     {
@@ -14,8 +14,8 @@ export const NavItems = [
         icon: <MenuBookIcon />
     },
     {
-        title: 'PROFILE',
-        link: '/profile',
-        icon: <PaymentIcon />
+        title: 'NOTIFICATIONS',
+        link: '/notifications',
+        icon: <NotificationsActiveIcon />
     }
 ]

@@ -350,3 +350,14 @@ label.checkLabel .avatar-demo {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     letter-spacing: 2px;
 }
+
+.card-icon {
+    opacity: 0.2;
+    bottom: 20px;
+    right: 30px;
+}
+
+.link-icon-color {
+    color: black;
+    opacity: 1;
+}
