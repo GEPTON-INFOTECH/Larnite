@@ -11,6 +11,27 @@ const firebaseConfig = {
   measurementId: "G-YW46ZKH3SN"
 };
 
-firebase.initializeApp(firebaseConfig);
+firebase.default.initializeApp(firebaseConfig);
 
-const messaging = firebase.messaging();
+const messaging = firebase.default.messaging();
+
+messaging.onBackgroundMessage(function (payload) {
+  console.log(payload);
+  const notificationOption={
+      body: payload.notification.body,
+      data: {
+        click_action: payload.data.link
+      }
+    };
+
+  return self.registration.showNotification(payload.notification.title,notificationOption);
+});
+
+self.addEventListener('notificationclick',function (event){
+    console.log(event.notification);
+    var action_click = event.notification.data.click_action;
+    event.notification.close();
+
+      clients.openWindow(action_click)
+});
+

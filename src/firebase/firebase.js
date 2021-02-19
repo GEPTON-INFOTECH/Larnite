@@ -13,4 +13,26 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+const messaging = firebase.messaging();
+messaging.onMessage((payload) => {
+  console.log(payload);
+  const notificationOption={
+      body:payload.notification.body,
+      data: {
+        click_action: payload.data.link
+      }
+  };
+
+  if(Notification.permission==="granted"){
+      var notification=new Notification(payload.notification.title,notificationOption);
+
+      notification.onclick=function (ev) {
+          ev.preventDefault();
+          window.open(payload.notification.click_action,'_blank');
+          notification.close();
+      }
+  }
+});
+
+
 export default firebase;
