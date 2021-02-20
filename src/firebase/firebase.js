@@ -1,15 +1,14 @@
 import firebase from 'firebase'
 import 'firebase/messaging';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCqdDrx9Yx8rJZ6oX8MR48iIarRKOO3wfU",
-    authDomain: "halite-d0150.firebaseapp.com",
-    projectId: "halite-d0150",
-    storageBucket: "halite-d0150.appspot.com",
-    messagingSenderId: "889279604799",
-    appId: "1:889279604799:web:bfca081df06a488a0bf08a",
-    measurementId: "G-YW46ZKH3SN"
-  };
+var firebaseConfig = {
+  apiKey: "AIzaSyDaV_KSKdQ6-Ov7OEgfaDQ8BeCxE_0xNDY",
+  authDomain: "pyfin-48d4f.firebaseapp.com",
+  projectId: "pyfin-48d4f",
+  storageBucket: "pyfin-48d4f.appspot.com",
+  messagingSenderId: "494253229078",
+  appId: "1:494253229078:web:4c8a5206fc9a8eac3d6137"
+};
 
 firebase.initializeApp(firebaseConfig);
 

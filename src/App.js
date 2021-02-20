@@ -14,15 +14,15 @@ import firebase from './firebase/firebase';
 import React,{useEffect} from 'react';
 import { loginUserAuth } from './redux/auth/Actions';
 import Notifications from './components/notifications/Notifications';
+import { ServerKey } from  './firebase/firebaseKey';
 
 function App() {
-  const serverKey = 'BIbdqnrxb-Kijs9iQTPV1gOZSw-9GYR4u3INSELX20fXs-KusVx5NzJzmUkw_-ERa-E5OdGamyRYn9XaAAPxNuA';
   const user = useSelector(state => state.uReducer);
   const dispatch = useDispatch();
   useEffect(async ()=>{
     try {
         const messaging = firebase.messaging();
-        let token = await messaging.getToken({vapidKey: serverKey});
+        let token = await messaging.getToken({vapidKey: ServerKey});
         // CHECK IF AUTHENTICATED & SEND IT TO DB TO STORE AS deviceToken
         if(token) {
           console.log('Current Token is: ',token);
