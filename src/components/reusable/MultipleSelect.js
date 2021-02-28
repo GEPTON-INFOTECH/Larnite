@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import { FormControl } from '@material-ui/core';
+import { type } from 'jquery';
 
 
 function MultipleSelect({ courses,handleCourseChange,disabled = false }) {
@@ -13,30 +14,24 @@ function MultipleSelect({ courses,handleCourseChange,disabled = false }) {
         courses: []
     });
 
-    useEffect(()=>{
-        getCourses();
-        setState({
-            ...state,
-            courses:[]
-        })
+    useEffect(async () => {
+        await getCourses();
     },[]);
 
 
     const getCourses = async () => {
         const db = firebase.firestore();
         let data = await db.collection('courses').get();
+        console.log(data.docs);
 
-        data.docs.forEach(doc => {
-            let d = state.courses;
-            d.push({
-                id: doc.id,
-                ...doc.data()
-            });
-
-            setState({
-                ...state,
-                courses: d
-            })
+        let da = [];
+        for(let i = 0 ; i < data.docs.length ; i++ ) {
+            da.push(data.docs[i].data());
+        }
+        console.log(da);
+        // console.log()
+        setState({
+            courses: da.slice()
         });
     }
 
@@ -44,15 +39,16 @@ function MultipleSelect({ courses,handleCourseChange,disabled = false }) {
         <div>
             <FormControl className="w-100">
             <InputLabel  id="demo-mutiple-chip-label">Courses</InputLabel>
+            {console.log(state.courses)}
             <Select
-            name="course"
-            labelId="demo-mutiple-chip-label"
-            id="demo-mutiple-chip"
-            multiple
-            value={courses}
-            disabled={disabled}
-            onChange={handleCourseChange}
-            input={<Input id="select-multiple-chip" />}
+                name="course"
+                labelId="demo-mutiple-chip-label"
+                id="demo-mutiple-chip"
+                multiple
+                value={courses}
+                disabled={disabled}
+                onChange={handleCourseChange}
+                input={<Input id="select-multiple-chip" />}
             renderValue={(selected) => (
                 <div>
                 {selected.map((value) => (
