@@ -55,7 +55,8 @@ function Navbar() {
             <nav className="navbar navbar-expand-md navbar-light ">
                     {/* NAVBAR LOGO */}
                     <a className="navbar-brand py-0" href="/" target="_blank">
-                        <img src={NavBrand} style={{height: '50px'}}/>
+                        {/* <img src={NavBrand} style={{height: '50px'}}/> */}
+                        PYFIN
                     </a>	
                     {/* END OF NAVBAR LOGO */}
                     {/* TOGGLER BUTTON */}

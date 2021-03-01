@@ -62,8 +62,8 @@ function Auth(props) {
 
     return (
         // AUTH FORM
-        <div className="container mt-0 mt-md-5  text-center">
-            <div className="row mt-0 mt-md-5 pt-5 mb-5">
+        <div className="container mt-0 mt-md-5 mb-5  text-center">
+            <div className="row mt-0 mt-md-5 mb-5">
             <SnackbarComponent open={auth.open} message={auth.error} handleClose={handleClose} />
             {auth.updateDetails == false ? 
                 <div 
@@ -73,8 +73,8 @@ function Auth(props) {
                     offset-lg-3 offset-md-2
                     offset-sm-1 mt-0 mt-md-5"
                 >
-                    <Card className="container text-center">
-                    <CardContent className="w-100">
+                    {/* <Card className="container text-center p-5 position-absolute">
+                    <CardContent className="w-100 pb-5 mb-5"> */}
                         <Typography variant="h4" component="h2">
                             { state.authType }
                         </Typography>
@@ -111,8 +111,8 @@ function Auth(props) {
                                 </Button> : <Spinner />
                             }
                            </form>
-                    </CardContent>
-                    </Card>
+                    {/* </CardContent>
+                    </Card> */}
                 </div>
                : 
                 <UpdateProfile phone={`+${state.phone}`} />

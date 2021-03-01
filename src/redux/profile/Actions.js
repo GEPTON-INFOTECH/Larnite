@@ -61,7 +61,8 @@ export const updateProfile =  (state,phone) => {
             lastName: state.lastName,
             email: state.email,
             phone: phone,
-            course: courses
+            course: courses,
+            courseExamDate: state.examDate
         },{merge: true});
        
 

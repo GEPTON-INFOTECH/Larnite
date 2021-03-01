@@ -23,7 +23,9 @@ function Profile(props) {
         editAbout: false,
         bio: 'Beatae pariatur neque recusandae! Exercitationem laborum voluptatibus repellat accusantium laudantium, consequuntur asperiores quisquam non, expedita ipsum possimus nam',
         editBioValue: 'Beatae pariatur neque recusandae! Exercitationem laborum voluptatibus repellat accusantium laudantium, consequuntur asperiores quisquam non, expedita ipsum possimus nam',
-        dialogOpen: false
+        dialogOpen: false,
+        examDates: [],
+        examDate: []
     });
     const profile = useSelector(state => state.pReducer);
     const user = useSelector(state => state.uReducer);
@@ -37,7 +39,9 @@ function Profile(props) {
             email: user.user.email,
             courses: user.user.course,
             bio: user.user.bio,
-            editBioValue: user.user.bio
+            editBioValue: user.user.bio,
+            examDates: user.user.courseExamDate,
+            examDate: user.user.courseExamDate
         });
 
         if(user.isLoggedIn == false) {
@@ -118,7 +122,19 @@ function Profile(props) {
 
     const handleSubmit = ($event) => {
         $event.preventDefault();
-        dispatch(updateProfile(state,user.user.phone));
+        let examDates = [];
+        for(let i = 0 ; i <state.courses.length ; i++ ) {
+
+            for(let j = 0 ; j < state.examDate.length ; j++ ) {
+                if(state.examDate[j].exam == state.courses[i]) {
+                    examDates[i] = {
+                        date: state.examDate[j].date,
+                        exam: state.courses[i]
+                    }
+                }
+            }
+        }
+        dispatch(updateProfile({...state,examDate: examDates},user.user.phone));
         cancelEditAbout();
     }
 
@@ -178,6 +194,53 @@ function Profile(props) {
                 </>
         )
     }
+
+    const setDate = (event) => {
+        let ed = state.examDate;
+        let x = -1;
+        for(let i = 0 ; i < ed.length ; i++) {
+            if(event.target.id == ed[i].exam) {
+                x = 0;
+                ed[i].date = event.target.value;
+            }
+        }
+        if(x == -1)
+            ed.push({
+                exam: event.target.id,
+                date: event.target.value
+            });
+        setState({
+            ...state,
+            examDate: ed
+        })
+    }
+
+
+    const getDatePickers = state.courses.map((c, idx) =>{
+        let date = -1;
+        for(let i = 0 ; i < state.examDate.length ; i++) {
+
+            if(state.examDate[i].exam == c) {
+                date = state.examDate[i].date;
+            }
+        }
+         return (
+            <TextField
+                key={idx}
+                className="w-50 px-4"
+                required
+                defaultValue={date}
+                id={c}
+                type="date"
+                label={c + " Exam Date"}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={setDate}
+                disabled={!state.editAbout}
+            />
+        )
+    })
 
 
     return (
@@ -309,7 +372,11 @@ function Profile(props) {
                                             <MultipleSelect disabled={!state.editAbout} handleCourseChange={handleCourseChange} courses={state.courses} />
                                         </div>
                                         <br />
+
                                     </div>
+                                    <br />
+                                    {getDatePickers}
+
                                     {getAboutUpdate()}
                                 </form>
                             </div>
@@ -324,6 +391,9 @@ function Profile(props) {
                                         </div>
                                         <br />
                                     </div>
+                                    <br />
+                                    {getDatePickers}
+
                                     { getAboutUpdate() }
                                 </form>
                             </div>

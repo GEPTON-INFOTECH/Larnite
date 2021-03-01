@@ -22,14 +22,10 @@ function MultipleSelect({ courses,handleCourseChange,disabled = false }) {
     const getCourses = async () => {
         const db = firebase.firestore();
         let data = await db.collection('courses').get();
-        console.log(data.docs);
-
         let da = [];
         for(let i = 0 ; i < data.docs.length ; i++ ) {
             da.push(data.docs[i].data());
         }
-        console.log(da);
-        // console.log()
         setState({
             courses: da.slice()
         });
@@ -39,7 +35,6 @@ function MultipleSelect({ courses,handleCourseChange,disabled = false }) {
         <div>
             <FormControl className="w-100">
             <InputLabel  id="demo-mutiple-chip-label">Courses</InputLabel>
-            {console.log(state.courses)}
             <Select
                 name="course"
                 labelId="demo-mutiple-chip-label"

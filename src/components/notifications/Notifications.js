@@ -35,10 +35,10 @@ const Notifications = () => {
                     { 
                         notifications.map((n,idx) => (
                             <div className="col-xl-3 col-lg-4 col-md-6 col-12 mt-1 px-1">
-                                <Card>
+                                <Card className="h-100">
                                     <CardContent>
                                         <NotificationsActiveIcon fontSize="large" className="position-absolute card-icon" />
-                                        <h5><a  href={n.link} target="_blank"><LinkIcon /></a> {n.title}</h5>
+                                        <h5><a href={n.link} target="_blank"><LinkIcon /></a> {n.title}</h5>
                                         <p>
                                             <small>
                                                 Date: <b>{(new Date(n.createdAt.toDate())).toDateString()}</b>

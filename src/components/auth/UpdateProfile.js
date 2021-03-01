@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { TextField } from '@material-ui/core';
+import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import firebase from '../../firebase/firebase';
 import { useHistory } from "react-router-dom";
 import UpdateProfileData from '../data/UpdateProfile';
@@ -13,26 +13,35 @@ import SnackbarComponent from '../reusable/SnackbarComponent';
 import MultipleSelect from '../reusable/MultipleSelect';
 import { useDispatch } from 'react-redux';
 import { updateProfile } from '../../redux/profile/Actions';
+import axios from 'axios';
+import { CountryData } from '../data/CountryData';
 
 function UpdateProfile({phone}) {
     const [state,setState] = useState({
         firstName: '',
         lastName: '',
         email: '',
+        country: '',
         courses: [],
         open: false,
-        message: ''
+        message: '',
+        examDate: []
     });
     const dispatch = useDispatch();
+    const [countries,setCountries] = useState(CountryData);
+    const examDates = [];
 
     let history = useHistory();
-    useEffect(() => {
+    useEffect(async () => {
         setState({
             ...state,
             courses: [],
             open: true,
             message: 'Update your details'
-        })
+        });
+
+        // GET ALL COUNTRIES
+       
     }, []);
 
     const handleChange = ($event) => {
@@ -57,7 +66,18 @@ function UpdateProfile({phone}) {
 
     const handleSubmit = ($event) => {
         $event.preventDefault();
-        dispatch(updateProfile(state,phone));
+       for(let i = 0 ; i <state.courses.length ; i++ ) {
+            examDates[i] = {
+                date: state.examDate[i],
+                exam: state.courses[i]
+            }
+        }
+        setState({
+            ...state,
+            examDate: examDates
+        })
+
+        dispatch(updateProfile({...state,examDate: examDates},phone));
         history.push('/');
     }
 
@@ -81,6 +101,39 @@ function UpdateProfile({phone}) {
         });
     }
 
+    const handleCountryChange = (event) => {
+        console.log(event);
+        setState({
+            ...state,
+            country: event.target.value
+        })
+    }
+
+    const setDate = (event) => {
+        let ed = state.examDate;
+        ed[event.target.id.slice(4)] = event.target.value
+        setState({
+            ...state,
+            examDate: ed
+        })
+    }
+
+    // GET DATE PICKERS
+    const getDatePickers = state.courses.map((c, idx) => (
+        <TextField
+            key={idx}
+            className="w-50 px-4"
+            required
+            id={'date' + idx}
+            type="date"
+            label={c + " Exam Date"}
+            InputLabelProps={{
+                shrink: true,
+            }}
+            onChange={setDate}
+        />
+    ));
+
     const handleClose = () => {
         setState({
             ...state,
@@ -93,7 +146,7 @@ function UpdateProfile({phone}) {
         <div className="col-lg-8 col-md-10
             col-sm-12 col-12 
             offset-lg-2 offset-md-1
-            mt-0 mt-md-2">
+            ">
                 
             {/* SNACKBAR */}
             <SnackbarComponent 
@@ -110,12 +163,28 @@ function UpdateProfile({phone}) {
                             Update Details
                         </Typography>
                     
-                        <form onSubmit={handleSubmit} className="mt-5">
+                        <form onSubmit={handleSubmit} className="mt-5 text-left">
                                 { getInputFields }
+
+                                <FormControl className="w-100">
+                                {/* COUNTRY FIELD */}
+                                <InputLabel id="country-select">Age</InputLabel>
+                                <Select labelId="country-select" required  value={state.country} onChange={handleCountryChange}>
+                                    {
+                                        countries.map((c,idx) => (
+                                            <MenuItem value={c} key={idx}>{c}</MenuItem>
+                                        ))
+                                    }
+
+                                </Select>
+                                </FormControl>
+                                {/* END OF COUNTRY FIELD */}
                                 <br/>
                                 <br />
                                 <MultipleSelect handleCourseChange={handleCourseChange} courses={state.courses} />
                                 <br />
+
+                                { getDatePickers }
 
                                 <Button 
                                     type="submit"
