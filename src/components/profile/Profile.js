@@ -229,7 +229,7 @@ function Profile(props) {
                 key={idx}
                 className="w-50 px-4"
                 required
-                defaultValue={date}
+                value={date}
                 id={c}
                 type="date"
                 label={c + " Exam Date"}

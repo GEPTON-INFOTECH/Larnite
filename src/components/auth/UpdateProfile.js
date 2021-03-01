@@ -66,10 +66,15 @@ function UpdateProfile({phone}) {
 
     const handleSubmit = ($event) => {
         $event.preventDefault();
-       for(let i = 0 ; i <state.courses.length ; i++ ) {
-            examDates[i] = {
-                date: state.examDate[i],
-                exam: state.courses[i]
+        let examDates = [];
+        for(let i = 0 ; i <state.courses.length ; i++ ) {
+            for(let j = 0 ; j < state.examDate.length ; j++ ) {
+                if(state.examDate[j].exam == state.courses[i]) {
+                    examDates[i] = {
+                        date: state.examDate[j].date,
+                        exam: state.courses[i]
+                    }
+                }
             }
         }
         setState({
@@ -111,7 +116,19 @@ function UpdateProfile({phone}) {
 
     const setDate = (event) => {
         let ed = state.examDate;
-        ed[event.target.id.slice(4)] = event.target.value
+        let x = -1;
+        for(let i = 0 ; i < ed.length ; i++) {
+            if(event.target.id == ed[i].exam) {
+                x = 0;
+                ed[i].date = event.target.value;
+            }
+        }
+        if(x == -1)
+            ed.push({
+                exam: event.target.id,
+                date: event.target.value
+            });
+            
         setState({
             ...state,
             examDate: ed
@@ -119,20 +136,30 @@ function UpdateProfile({phone}) {
     }
 
     // GET DATE PICKERS
-    const getDatePickers = state.courses.map((c, idx) => (
-        <TextField
-            key={idx}
-            className="w-50 px-4"
-            required
-            id={'date' + idx}
-            type="date"
-            label={c + " Exam Date"}
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={setDate}
-        />
-    ));
+    const getDatePickers = state.courses.map((c, idx) => {
+        let date = -1;
+        for(let i = 0 ; i < state.examDate.length ; i++) {
+
+            if(state.examDate[i].exam == c) {
+                date = state.examDate[i].date;
+            }
+        }
+         return (
+            <TextField
+                key={idx}
+                className="w-50 px-4"
+                required
+                id={c}
+                value={date}
+                type="date"
+                label={c + " Exam Date"}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                onChange={setDate}
+            />
+        )
+    });
 
     const handleClose = () => {
         setState({
