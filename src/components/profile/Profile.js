@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import '../../App.css';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
@@ -12,6 +12,8 @@ import SnackbarComponent from '../reusable/SnackbarComponent';
 import DialogComponent from '../reusable/DialogComponent';
 import AvatarComponent from '../reusable/AvatarComponent';
 import Stats from './Stats';
+import { TextField, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
+import { CountryData } from '../data/CountryData';
 
 function Profile(props) {
     const [state,setState] = useState({
@@ -25,8 +27,11 @@ function Profile(props) {
         editBioValue: 'Beatae pariatur neque recusandae! Exercitationem laborum voluptatibus repellat accusantium laudantium, consequuntur asperiores quisquam non, expedita ipsum possimus nam',
         dialogOpen: false,
         examDates: [],
-        examDate: []
+        examDate: [],
+        country: ''
     });
+    const [countries,setCountries] = useState(CountryData);
+
     const profile = useSelector(state => state.pReducer);
     const user = useSelector(state => state.uReducer);
     const dispatch = useDispatch();
@@ -41,7 +46,8 @@ function Profile(props) {
             bio: user.user.bio,
             editBioValue: user.user.bio,
             examDates: user.user.courseExamDate,
-            examDate: user.user.courseExamDate
+            examDate: user.user.courseExamDate,
+            country: user.user.country
         });
 
         if(user.isLoggedIn == false) {
@@ -49,6 +55,14 @@ function Profile(props) {
         }
 
     },[]);
+
+    const handleCountryChange = (event) => {
+        console.log(event);
+        setState({
+            ...state,
+            country: event.target.value
+        })
+    }
 
     const handleChange = ($event) => {
         setState({
@@ -365,6 +379,30 @@ function Profile(props) {
 
                                     <div className="row ">
                                     
+                                    <div className="col-4 text-monospace my-auto">
+                                        Country
+                                    </div>
+                                    <div className="col-8 mt-3">
+                                        <FormControl className="w-100 mt-2">
+                                        {/* COUNTRY FIELD */}
+                                        <InputLabel id="country-select">Country</InputLabel>
+                                        <Select disabled={!state.editAbout} labelId="country-select" required  value={state.country} onChange={handleCountryChange}>
+                                            {
+                                                countries.map((c,idx) => (
+                                                    <MenuItem value={c} key={idx}>{c}</MenuItem>
+                                                ))
+                                            }
+
+                                        </Select>
+                                        </FormControl>
+                                        {/* END OF COUNTRY FIELD */}                                    </div>
+                                    <br />
+
+                                </div>
+                                    
+
+                                    <div className="row ">
+                                    
                                         <div className="col-4 text-monospace my-auto">
                                             Courses
                                         </div>
@@ -384,6 +422,20 @@ function Profile(props) {
                             <div className="d-block d-md-none">
                                 <form onSubmit={handleSubmit}>
                                     { getInputFieldSmall }
+
+                                    <FormControl className="w-100">
+                                        {/* COUNTRY FIELD */}
+                                        <InputLabel id="country-select">Country</InputLabel>
+                                        <Select disabled={!state.editAbout} labelId="country-select" required  value={state.country} onChange={handleCountryChange}>
+                                            {
+                                                countries.map((c,idx) => (
+                                                    <MenuItem value={c} key={idx}>{c}</MenuItem>
+                                                ))
+                                            }
+
+                                        </Select>
+                                        </FormControl>
+                                        {/* END OF COUNTRY FIELD */}
 
                                     <div className="row ">
                                         <div className="col-12 mt-3">
