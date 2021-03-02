@@ -195,7 +195,7 @@ function UpdateProfile({phone}) {
 
                                 <FormControl className="w-100">
                                 {/* COUNTRY FIELD */}
-                                <InputLabel id="country-select">Age</InputLabel>
+                                <InputLabel id="country-select">Country</InputLabel>
                                 <Select labelId="country-select" required  value={state.country} onChange={handleCountryChange}>
                                     {
                                         countries.map((c,idx) => (
