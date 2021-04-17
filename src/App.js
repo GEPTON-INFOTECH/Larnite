@@ -15,6 +15,9 @@ import React,{useEffect} from 'react';
 import { loginUserAuth } from './redux/auth/Actions';
 import Notifications from './components/notifications/Notifications';
 import { ServerKey } from  './firebase/firebaseKey';
+import Privacy from './components/pages/Privacy';
+import Contact from './components/pages/Contact';
+import Terms from './components/pages/Terms';
 
 function App() {
   const user = useSelector(state => state.uReducer);
@@ -49,6 +52,9 @@ function App() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/signin" exact component={Auth}/>
+            <Route path="/privacy" exact component={Privacy}/>
+            <Route path="/terms" exact component={Terms}/>
+            <Route path="/contact" exact component={Contact}/>
             <Protected path="/profile" exact component={Profile} />
             <Protected path="/courses" exact component={Courses} />
             <Protected path="/notifications" exact component={Notifications} />

@@ -361,3 +361,8 @@ label.checkLabel .avatar-demo {
     color: black;
     opacity: 1;
 }
+.terms, .about, .privacy, .refund {
+    text-align: left;
+    max-width: 70%;
+    margin: auto;
+}
