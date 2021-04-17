@@ -52,7 +52,7 @@ export const loginUser = (phone,history,appVerifier) => {
                             if(!res.additionalUserInfo.isNewUser){
                                 let db = firebase.firestore();
                                 let data = await db.collection('students').doc(`+${phone}`).get();
-                                if(data.data() == undefined) {
+                                if(data.data() === undefined) {
                                     dispatch(loginUserAuth(null,true))
                                 } else {
                                     dispatch(loginUserAuth(data.data(),false));

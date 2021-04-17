@@ -7,7 +7,7 @@ function Protected({component,...rest}) {
     const user = useSelector(state => state.uReducer);
     const Component = component;
     return (
-        (user.isLoggedIn == true) ? 
+        (user.isLoggedIn === true) ? 
         <Route {...rest} render={(props => (<Component {...props}/>))} /> : 
                 <Redirect to="/signin" {...rest} />
     )

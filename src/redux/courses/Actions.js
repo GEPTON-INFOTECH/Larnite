@@ -219,7 +219,7 @@ export const getPercentage = async (completedArray,id) => {
         }
     }
 
-    if(total == 0) 
+    if(total === 0) 
         return 0;
     return parseFloat(completed * 100 / total).toFixed(2);
 }

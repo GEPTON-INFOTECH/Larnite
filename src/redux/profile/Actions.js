@@ -29,7 +29,7 @@ export const updateProfile =  (state,phone) => {
 
 
         let courses = state.courses;
-        if(courses.length == 0) {
+        if(courses.length === 0) {
             const db = firebase.firestore();
             let data = await db.collection('courses').get();
 

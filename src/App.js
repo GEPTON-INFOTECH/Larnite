@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from './components/shared/Navbar/Navbar';
 import Auth from './components/auth/Auth';
 import Home from './components/Home';
-import { Provider, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Profile from './components/profile/Profile';
 import Protected from './components/shared/protected/Protected';
 import Courses from './components/courses/Courses';

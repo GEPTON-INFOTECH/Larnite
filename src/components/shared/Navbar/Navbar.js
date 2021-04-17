@@ -11,7 +11,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import EditIcon from '@material-ui/icons/Edit';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
-import NavBrand from '../../../images/logos/horizontal-logo-without-background.png';
 
 function Navbar() {
     
@@ -76,7 +75,7 @@ function Navbar() {
                        
                         
                         {/* BUTTON FOR SIGIN */}
-                        { (state.user == { } || state.user == null) ? 
+                        { (state.user === { } || state.user == null) ? 
                             <Link to="/signin">
                                 <Button color="primary" variant="contained" className="ml-0 ml-md-2 px-5 login-button text-left text-md-center ">
                                     Sign In

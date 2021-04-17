@@ -1,9 +1,7 @@
 import React,{ useEffect,useState } from 'react'
-import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
-import { Menu,MenuItem, SubMenu } from 'react-pro-sidebar';
-import ChapterList from './ChapterList';
+import { MenuItem } from 'react-pro-sidebar';
 import firebase from '../../firebase/firebase';
-import { Link,useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { useSelector } from 'react-redux';
 
@@ -30,7 +28,7 @@ function TopicList({paper,course,chapter}) {
                 id: paperTopics[i]
             });
         }
-        if(isSubscribed == true)
+        if(isSubscribed === true)
             setState({
                 ...state,
                 topics: t
@@ -59,7 +57,7 @@ function TopicList({paper,course,chapter}) {
 
     return (
         <>
-        {state.topics != [] && topicList}
+        {state.topics !== [] && topicList}
         </>
     )
 }
