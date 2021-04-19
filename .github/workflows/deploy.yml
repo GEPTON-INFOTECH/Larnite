@@ -23,12 +23,11 @@ jobs:
         run: npm install
         
       - name: Build Static Files
-        run: npm run build
+        run: CI='' npm run build
         
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
-          CI: 'false'
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
