@@ -11,9 +11,9 @@ function Home() {
             <div className="container-fluid mt-5">
                 <div className="row">
                     <div className="col-md-6 col-12 my-auto text-left">
-                        <h2 className="heading">Introduction</h2>
+                        <h2 className="heading">Who are We?</h2>
                         <p className="text-left course-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, vel, sed laborum, at recusandae magni maxime debitis voluptate corporis est fugiat. Corrupti asperiores natus ratione, quos assumenda quasi illo inventore!
+                        We provide Mentorship and Guidance for FRM Level 1 exam conducted by GARP.
                         </p>
                         <Button className="mt-2 text-left rounded-pill mb-3 mb-md-0 theme-background" size="large" variant="contained" color="primary">Expore Courses</Button>
                     </div>

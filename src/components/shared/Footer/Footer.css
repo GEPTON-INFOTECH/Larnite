@@ -1,0 +1,13 @@
+.footer{
+    background-color: #502099;
+    color: #fff;
+    padding: 2rem;
+    box-shadow: black;
+}
+.footer-link{
+    color: white;
+    margin: 6px;
+}
+.footer-link:hover{
+    color: blanchedalmond;
+}

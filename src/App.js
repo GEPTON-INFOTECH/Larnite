@@ -18,6 +18,10 @@ import { ServerKey } from  './firebase/firebaseKey';
 import Privacy from './components/pages/Privacy';
 import Contact from './components/pages/Contact';
 import Terms from './components/pages/Terms';
+import Refund from './components/pages/Refund';
+import Pricing from './components/pages/Pricing';
+import About from './components/pages/About';
+import Footer from './components/shared/Footer/Footer';
 
 function App() {
   const user = useSelector(state => state.uReducer);
@@ -55,6 +59,9 @@ function App() {
             <Route path="/privacy" exact component={Privacy}/>
             <Route path="/terms" exact component={Terms}/>
             <Route path="/contact" exact component={Contact}/>
+            <Route path="/about" exact component={About}/>
+            <Route path="/pricing" exact component={Pricing}/>
+            <Route path="/refund" exact component={Refund}/>
             <Protected path="/profile" exact component={Profile} />
             <Protected path="/courses" exact component={Courses} />
             <Protected path="/notifications" exact component={Notifications} />
@@ -76,6 +83,7 @@ function App() {
             </Route>
           </Switch>
           {/* END OF ROUTES */}
+          <Footer/>
       </div>
     </BrowserRouter>
   );
