@@ -1,6 +1,7 @@
 name: Deploy Website
 
 on:
+  push:
   release:
     types:
       - created
@@ -29,4 +30,5 @@ jobs:
         with:
           args: deploy --only hosting
         env:
+          CI: false
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
