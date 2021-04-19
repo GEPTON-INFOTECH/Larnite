@@ -1,4 +1,4 @@
-name: Deploy Website
+name: Firebase Deploy
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - created
 
 jobs:
-  firebase:
+  build:
     name: Deploy to Firebase
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +24,6 @@ jobs:
         
       - name: Build Static Files
         run: CI='' npm run build
-        
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
