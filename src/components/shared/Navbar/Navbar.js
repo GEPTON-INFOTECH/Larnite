@@ -50,10 +50,10 @@ function Navbar() {
     <div className="Navbar shadow p-3">
       <nav className="navbar navbar-expand-md navbar-light ">
         {/* NAVBAR LOGO */}
-        <a className="navbar-brand py-0" href="/" target="_blank">
+        <Link className="navbar-brand py-0" to="/">
           {/* <img src={NavBrand} style={{height: '50px'}}/> */}
           PYFIN ACADEMY
-        </a>
+        </Link>
         {/* END OF NAVBAR LOGO */}
         {/* TOGGLER BUTTON */}
         <button
@@ -72,9 +72,13 @@ function Navbar() {
           className="collapse navbar-collapse text-left text-md-center"
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav mx-auto py-4 text-left text-md-center py-md-0">
-            {NavItemHTML}
-          </ul>
+          {state.user === {} || state.user == null ? (
+            <ul className="navbar-nav mx-auto py-4 text-left text-md-center py-md-0"></ul>
+          ) : (
+            <ul className="navbar-nav mx-auto py-4 text-left text-md-center py-md-0">
+              {NavItemHTML}
+            </ul>
+          )}
 
           {/* BUTTON FOR SIGIN */}
           {state.user === {} || state.user == null ? (
