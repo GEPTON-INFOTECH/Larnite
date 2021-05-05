@@ -1,368 +1,793 @@
 .App {
-    text-align: center;
-    background-color: #f4f7f6;
-    min-height: 100vh;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
-    box-sizing: border-box;
+  text-align: center;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+  box-sizing: border-box;
 }
 
-
-.Navbar{
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    z-index: 100;
-    width: 100%;
+.Navbar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
 }
 
 .profile-image {
-    border-radius: 50% !important;
-    width: 40%;
-    bottom: -50px;
-    text-align: center;
-    margin: auto;
-    right: 0;
-    left: 0;
-    margin: auto;
+  border-radius: 50% !important;
+  width: 40%;
+  bottom: -50px;
+  text-align: center;
+  margin: auto;
+  right: 0;
+  left: 0;
+  margin: auto;
 }
 
 .upload-avatar {
-    border: 2px solid #2f4050 !important;
-    background-color: white !important;
-    color: #2f4050 !important;
+  border: 2px solid #2f4050 !important;
+  background-color: white !important;
+  color: #2f4050 !important;
 }
 
 .upload-avatar:hover {
-    border: 2px solid #2f4050;
-    background-color: #2f4050 !important;
-    color: white !important;
+  border: 2px solid #2f4050;
+  background-color: #2f4050 !important;
+  color: white !important;
 }
 
 .profile-update {
-    border: 2px solid #2f4050;
-    background-color: #2f4050 !important;
-    color: white !important;
+  border: 2px solid #2f4050;
+  background-color: #2f4050 !important;
+  color: white !important;
 }
 
 .profile-update:hover {
-    border: 2px solid #2f4050;
-    background-color: white !important;
-    color: #2f4050 !important;
+  border: 2px solid #2f4050;
+  background-color: white !important;
+  color: #2f4050 !important;
 }
 
 .profile-title {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif !important;
 }
 
 .profile-help-text,
 .text-field-name {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-.content-container{
-    overflow-y:scroll; 
-    position:relative;
-    padding-top: 80px;
-    height: 300px;
+.content-container {
+  overflow-y: scroll;
+  position: relative;
+  padding-top: 80px;
+  height: 300px;
 }
 
 @media (max-width: 992px) {
-    .profile-title {
-        font-size: 1.6rem !important;
-    }
-    .course-content {
-        font-size: 18px !important;
-    }
+  .profile-title {
+    font-size: 1.6rem !important;
+  }
+  .course-content {
+    font-size: 18px !important;
+  }
 }
 
 @media (max-width: 768px) {
-    .profile-title {
-        font-size: 1.5rem !important;
-    }
+  .profile-title {
+    font-size: 1.5rem !important;
+  }
 }
 
 @media (max-width: 576px) {
-    .profile-title {
-        font-size: 1.3rem !important;
-    }
-    .course-content {
-        font-size: 16px !important;
-    }
+  .profile-title {
+    font-size: 1.3rem !important;
+  }
+  .course-content {
+    font-size: 16px !important;
+  }
 }
 
 @media (max-width: 200px) {
-    .profile-title {
-        font-size: 0.8rem !important;
-    }
+  .profile-title {
+    font-size: 0.8rem !important;
+  }
 }
 
 .heading {
-    font-size: 32px;
-    color: #2f4050;
-    text-transform: uppercase;
-    font-weight: 700;
-    position: relative;
-    /* padding-bottom: 20px; */
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    text-align: left;
+  font-size: 32px;
+  color: #2f4050;
+  text-transform: uppercase;
+  font-weight: 700;
+  position: relative;
+  /* padding-bottom: 20px; */
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  text-align: left;
 }
 
 .heading-underline {
-    font-size: 32px;
-    color: #502099;
-    text-transform: uppercase;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: 800;
-    letter-spacing: 6px !important;
-    position: relative;
-    padding-bottom: 10px;
-    text-align: center;
+  font-size: 32px;
+  color: #502099;
+  text-transform: uppercase;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 800;
+  letter-spacing: 6px !important;
+  position: relative;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
 .course-content {
-    font-size: 18px !important;
-    opacity: 0.8;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 18px !important;
+  opacity: 0.8;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 .heading-underline::before {
-    content: '';
-    position: absolute;
-    display: block;
-    width: 62px;
-    height: 3px;
-    bottom: 0;
-    left: 0;
-    border-top: #502099 solid 2px;
-    right: 0;
-    text-align: left;
-    margin: 0 auto;
+  content: "";
+  position: absolute;
+  display: block;
+  width: 62px;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  border-top: #502099 solid 2px;
+  right: 0;
+  text-align: left;
+  margin: 0 auto;
 }
 
 .chapter-title {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: #502099;
-    opacity: 0.8;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #502099;
+  opacity: 0.8;
 }
 
 .chapter-intro {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 
 .theme-background {
-    background-color: #502099 !important;
-    color: white !important;
+  background-color: #502099 !important;
+  color: white !important;
 }
 
 .theme-background:disabled {
-    opacity: 0.4
+  opacity: 0.4;
 }
-
 
 /* CHOOSE AVATAR */
 
 label.checkLabel {
-    border: 1px solid #fff;
-    padding: 10px;
-    display: block;
-    position: relative;
-    margin: 10px;
-    cursor: pointer;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  border: 1px solid #fff;
+  padding: 10px;
+  display: block;
+  position: relative;
+  margin: 10px;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 label.checkLabel::before {
-    background-color: white;
-    color: white;
-    content: " ";
-    display: block;
-    border-radius: 50%;
-    border: 1px solid grey;
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    line-height: 28px;
-    transition-duration: 0.4s;
-    transform: scale(0);
+  background-color: white;
+  color: white;
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  border: 1px solid grey;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 28px;
+  transition-duration: 0.4s;
+  transform: scale(0);
 }
 
 .avatar-checkbox {
-    display: none;
+  display: none;
 }
 
 label.checkLabel .avatar-demo {
-    transition-duration: 0.2s;
-    transform-origin: 50% 50%;
+  transition-duration: 0.2s;
+  transform-origin: 50% 50%;
 }
 
- :checked+label {
-    border-color: #ddd;
+:checked + label {
+  border-color: #ddd;
 }
 
- :checked+label::before {
-    content: "✓";
-    background-color: grey;
-    transform: scale(1);
+:checked + label::before {
+  content: "✓";
+  background-color: grey;
+  transform: scale(1);
 }
 
- :checked+label .avatar-demo {
-    transform: scale(0.9);
-    box-shadow: 0 0 5px #333;
-    /* z-index: -1; */
+:checked + label .avatar-demo {
+  transform: scale(0.9);
+  box-shadow: 0 0 5px #333;
+  /* z-index: -1; */
 }
-
 
 /* EN OF CHOOSE AVATAR */
 
 .read-more {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    outline: none;
-    border: 0;
-    vertical-align: middle;
-    text-decoration: none;
-    background: transparent;
-    padding: 0;
-    font-size: inherit;
-    font-family: inherit;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
 }
 
 .read-more.btn {
-    width: 12rem;
-    height: auto;
+  width: 12rem;
+  height: auto;
 }
 
 .read-more.btn .circle {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    position: relative;
-    display: block;
-    margin: 0;
-    width: 3rem;
-    height: 3rem;
-    background: #502099;
-    border-radius: 1.625rem;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #502099;
+  border-radius: 1.625rem;
 }
 
 .read-more.btn .circle .icon {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    background: #fff;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
 }
 
 .read-more.btn .circle .icon.arrow {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    left: 0.625rem;
-    width: 1.125rem;
-    height: 0.125rem;
-    background: none;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
 }
 
 .read-more.btn .circle .icon.arrow::before {
-    position: absolute;
-    content: '';
-    top: -0.25rem;
-    right: 0.0625rem;
-    width: 0.625rem;
-    height: 0.625rem;
-    border-top: 0.125rem solid #fff;
-    border-right: 0.125rem solid #fff;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
+  position: absolute;
+  content: "";
+  top: -0.25rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .read-more.btn .button-text {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 0.8rem 0;
-    margin: 0 0 0 1.85rem;
-    color: #502099;
-    font-weight: 700;
-    line-height: 1.2;
-    text-align: center;
-    text-transform: uppercase;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.8rem 0;
+  margin: 0 0 0 1.85rem;
+  color: #502099;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .read-more:hover .circle {
-    width: 100%;
+  width: 100%;
 }
 
 .read-more:hover .circle .icon.arrow {
-    background: #fff;
-    -webkit-transform: translate(1rem, 0);
-    transform: translate(1rem, 0);
+  background: #fff;
+  -webkit-transform: translate(1rem, 0);
+  transform: translate(1rem, 0);
 }
 
 .read-more:hover .button-text {
-    color: #fff;
+  color: #fff;
 }
 
 .MuiDrawer-paper {
-    height: 90% !important;
-    margin-top: 73px !important;
-    width: 300px !important;
-    margin-bottom: 10px !important;
+  height: 90% !important;
+  margin-top: 73px !important;
+  width: 300px !important;
+  margin-bottom: 10px !important;
 }
 
 .paper-content {
-    margin-left: 300px !important;
+  margin-left: 300px !important;
 }
 
-
 @media (max-width: 1199px) {
-    .paper-content {
-        margin-left: 0px !important;
-    }
-    .MuiDrawer-paper {
-        margin-top: 0px !important;
-        height: 100% !important;
-    }
+  .paper-content {
+    margin-left: 0px !important;
+  }
+  .MuiDrawer-paper {
+    margin-top: 0px !important;
+    height: 100% !important;
+  }
 }
 
 .drawer {
-    position: relative !important;
+  position: relative !important;
 }
-
 
 .paper-card-height {
-    margin-top: -80px !important;
+  margin-top: -80px !important;
 }
 
-
-.finish-title{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    letter-spacing: 2px;
+.finish-title {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  letter-spacing: 2px;
 }
 
 .card-icon {
-    opacity: 0.2;
-    bottom: 20px;
-    right: 30px;
+  opacity: 0.2;
+  bottom: 20px;
+  right: 30px;
 }
 
 .link-icon-color {
-    color: black;
-    opacity: 1;
+  color: black;
+  opacity: 1;
 }
-.terms, .privacy {
-    text-align: left;
-    max-width: 70%;
-    margin: auto;
+
+/* --------------------------------------------------------Home Page-------------------------------------------------------- */
+.who-are-we {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* - - - - - - - - - Tooltips - - - */
+
+.has-tooltip:not(.tooltip-disabled) {
+  cursor: help;
+  position: relative;
+}
+
+.has-tooltip:not(.tooltip-disabled):hover .tooltip-container {
+  display: block;
+}
+
+.has-tooltip .tooltip-container {
+  display: none;
+  position: absolute;
+  background-color: white;
+  z-index: 20;
+  bottom: calc(100% + 13px);
+  left: -10px;
+  right: -10px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 55px -10px #777;
+}
+.has-tooltip .tooltip-container:after {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+  font-size: 0;
+  line-height: 0;
+  content: "";
+  position: absolute;
+  bottom: -10px;
+}
+
+.has-tooltip .tooltip-container h6 {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0px;
+}
+
+.has-tooltip .tooltip-container p {
+  color: #555;
+  margin-top: 4px;
+}
+/* - - - - - - - End Tooltips - - - */
+
+#pricing-container * {
+  box-sizing: border-box;
+}
+
+#pricing-container {
+  font-family: "Open Sans", Helvetica, Arial, Lucida, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  max-width: 1080px;
+  margin: 0 auto 50px;
+  justify-content: center;
+  line-height: 1;
+  color: #000;
+}
+
+/* Cards */
+
+#pricing-cards {
+  display: flex;
+  font-size: 14px;
+}
+
+#pricing-container .price-card {
+  background-color: white;
+  font-family: "Open Sans", Helvetica, Arial, Lucida, sans-serif;
+  display: block;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.25s;
+  position: relative;
+  margin: 0 6px;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+#pricing-container .price-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* - - - - - - - - - Header Section - - - */
+
+#pricing-container .price-card--header {
+  background-color: #daf1df;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+#pricing-container .price-card--header h4 {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  color: #502099;
+  font-family: "Raleway", Helvetica, Arial, Lucida, sans-serif;
+  font-weight: 700;
+}
+
+/* - - - - - - - - - Price Section - - - */
+
+#pricing-container .price-card--price {
+  text-align: center;
+  padding: 28px 0 6px 0;
+}
+
+#pricing-container .price-card--price-text {
+  font-size: 48px;
+}
+
+#pricing-container .price-card--price-number {
+  font-weight: 500;
+  opacity: 0.89;
+}
+
+.odometer div {
+  display: inline-block;
+}
+
+#pricing-container .price-card--price-number:before {
+  content: "₹";
+  font-size: 24px;
+  top: -16px;
+  display: inline-block;
+  position: relative;
+}
+
+#pricing-container .price-card--price-number:after {
+  content: "/month";
+  font-size: 12px;
+  display: inline-block;
+  color: grey;
+}
+
+#pricing-container .price-card--price-conditions {
+  padding: 14px 0;
+  color: #888;
+  line-height: 1.5;
+}
+
+#pricing-container .price-card--onboarding-fee {
+  color: #502099;
+}
+
+#pricing-container .price-card--onboarding-fee.has-fee {
+  color: #888;
+}
+
+/* - - - - - - - - - CTA Button Section - - - */
+
+#pricing-container .price-card--cta {
+  padding: 0 20px 24px;
+  text-align: center;
+}
+
+#pricing-container .price-card--cta--button.btn {
+  min-width: 20px;
+  display: block;
+  max-width: 183px;
+  margin: 0 auto;
+}
+
+/* - - - - - - - - - Features Section - - - */
+
+#pricing-container .price-card--features {
+  border-top: 1px solid #ddd;
+  padding: 16px 0 20px;
+}
+
+#pricing-container ul.price-card--features--list {
+  padding: 0 32px;
+  list-style: none;
+  margin: 0;
+}
+
+#pricing-container li.price-card--features--item {
+  margin: 8px 0;
+  padding-left: 8px;
+  line-height: 1.5;
+  position: relative;
+}
+
+#pricing-container
+  li.price-card--features--item:not(.features-disabled):before {
+  content: "✓";
+  color: #502099;
+  display: block;
+  position: absolute;
+  left: -8px;
+}
+
+#pricing-container li.price-card--features--item.features-disabled {
+  opacity: 0.1;
+  /* 	text-decoration: line-through; */
+}
+
+/* - - - - - - - - - Hero Card Styles - - - */
+
+#pricing-container .price-card--hero {
+  margin: -38px 6px 0;
+  /* 	width:31%; */
+  z-index: 10;
+}
+
+#pricing-container .price-card--hero-text {
+  background-color: #502099;
+  height: 38px;
+  color: white;
+  line-height: 38px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* - - - - - - - - - - - - - - - - - - - */
+/* - - - - - - - - - Media Queries - - - */
+/* - - - - - - - - - - - - - - - - - - - */
+
+@media (max-width: 1280px) {
+  /* Tweak the card price font size */
+  #pricing-container .price-card--price-text {
+    font-size: 32px;
+  }
+  #pricing-container .price-card--price-number:before {
+    top: -10px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 981px) {
+  /* 	always show features when not in mobile view */
+  #pricing-container .price-card--features {
+    display: block !important;
+  }
+}
+
+@media (max-width: 980px) {
+  #pricing-cards {
+    display: block;
+    padding: 0 24px;
+  }
+  #pricing-container .price-card {
+    max-width: 360px;
+    margin: 0 auto 48px;
+  }
+  #pricing-container .price-card:hover {
+    transform: none;
+  }
+  #pricing-container .price-card-full-width {
+    display: block;
+  }
+  #pricing-container .price-card-full-width .price-card--features--list {
+    columns: 1;
+  }
+  #pricing-container .price-card--price {
+    padding: 28px 0 0;
+  }
+  #pricing-container .price-card--features {
+    margin: 26px 0 0 0;
+    padding-bottom: 0;
+  }
+  #pricing-container ul.price-card--features--list {
+    max-width: 250px;
+    margin: 0 auto;
+  }
+  #pricing-container .price-card--mobile-features-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  #pricing-container .price-card {
+    max-width: 360px;
+    margin: 0 auto 36px;
+  }
+}
+
+/* ****************** */
+/* Odometer Theme CSS */
+/* ****************** */
+/* https://raw.githubusercontent.com/HubSpot/odometer/master/themes/odometer-theme-default.css */
+
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-default {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  position: relative;
+}
+.odometer.odometer-auto-theme .odometer-digit,
+.odometer.odometer-theme-default .odometer-digit {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  position: relative;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
+.odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  visibility: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,
+.odometer.odometer-theme-default .odometer-digit .odometer-digit-inner {
+  text-align: left;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,
+.odometer.odometer-theme-default .odometer-digit .odometer-ribbon {
+  display: block;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,
+.odometer.odometer-theme-default .odometer-digit .odometer-ribbon-inner {
+  display: block;
+  -webkit-backface-visibility: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,
+.odometer.odometer-theme-default .odometer-digit .odometer-value {
+  display: block;
+  -webkit-transform: translateZ(0);
+}
+.odometer.odometer-auto-theme
+  .odometer-digit
+  .odometer-value.odometer-last-value,
+.odometer.odometer-theme-default
+  .odometer-digit
+  .odometer-value.odometer-last-value {
+  position: absolute;
+}
+.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-up .odometer-ribbon-inner {
+  -webkit-transition: -webkit-transform 2s;
+  -moz-transition: -moz-transform 2s;
+  -ms-transition: -ms-transform 2s;
+  -o-transition: -o-transform 2s;
+  transition: transform 2s;
+}
+.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating
+  .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-up.odometer-animating
+  .odometer-ribbon-inner {
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-down
+  .odometer-ribbon-inner {
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating
+  .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-down.odometer-animating
+  .odometer-ribbon-inner {
+  -webkit-transition: -webkit-transform 2s;
+  -moz-transition: -moz-transform 2s;
+  -ms-transition: -ms-transform 2s;
+  -o-transition: -o-transform 2s;
+  transition: transform 2s;
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-default {
+  font-family: "Helvetica Neue", sans-serif;
+  line-height: 1.1em;
+}
+.odometer.odometer-auto-theme .odometer-value,
+.odometer.odometer-theme-default .odometer-value {
+  text-align: center;
+}
+
+/* ************************** */
+/* UPDATES TO CHANGE DURATION */
+/* ************************** */
+
+.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
+.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner,
+.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating
+  .odometer-ribbon-inner,
+.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating
+  .odometer-ribbon-inner {
+  -webkit-transition: -webkit-transform 0.4s;
+  -moz-transition: -moz-transform 0.4s;
+  -ms-transition: -ms-transform 0.4s;
+  -o-transition: -o-transform 0.4s;
+  transition: transform 0.4s;
+  will-change: auto;
+}
+
+/* ------------------------------------------------------END OF HOME------------------------------------------------- */
+.terms,
+.privacy {
+  text-align: left;
+  max-width: 70%;
+  margin: auto;
 }
