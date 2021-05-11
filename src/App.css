@@ -359,6 +359,11 @@ label.checkLabel .avatar-demo {
   opacity: 1;
 }
 
+/*---------------------------------------------------------Material UI-------------------------------------------------*/
+.Button {
+  color: #502099;
+}
+
 /* --------------------------------------------------------Home Page-------------------------------------------------------- */
 .who-are-we {
   height: 100vh;
@@ -492,7 +497,15 @@ label.checkLabel .avatar-demo {
 }
 
 #pricing-container .price-card--price-number:before {
-  content: "₹";
+  content: "$";
+  font-size: 24px;
+  top: -16px;
+  display: inline-block;
+  position: relative;
+}
+
+#pricing-container .price-card--price-number-y:before {
+  content: "$";
   font-size: 24px;
   top: -16px;
   display: inline-block;
@@ -501,6 +514,12 @@ label.checkLabel .avatar-demo {
 
 #pricing-container .price-card--price-number:after {
   content: "/month";
+  font-size: 12px;
+  display: inline-block;
+  color: grey;
+}
+#pricing-container .price-card--price-number-y:after {
+  content: "/year";
   font-size: 12px;
   display: inline-block;
   color: grey;

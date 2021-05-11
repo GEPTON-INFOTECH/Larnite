@@ -1,3 +1,5 @@
+import { Box, Button } from "@material-ui/core";
+
 const Pricing = () => {
   return (
     <section id="pricing-container">
@@ -8,14 +10,14 @@ const Pricing = () => {
             <p>Mentorship & Guidance Program</p>
           </div>
 
-          <div class="price-card--price">
+          {/* <div class="price-card--price">
             <div class="price-card--price-text">
               <div
                 class="price-card--price-number toggle-price-content odometer"
                 data-price-monthly="2,499"
                 data-price-yearly="2,250"
               >
-                2,250
+                80
               </div>
             </div>
             <div class="price-card--price-conditions">
@@ -24,19 +26,19 @@ const Pricing = () => {
                 data-price-monthly="Billed Monthly"
                 data-price-yearly="Billed Annually"
               >
-                Billed Annually
+                Billed Monthly
               </div>
               <div class="price-card--onboarding-fee toggle-price-content">
                 No Hidden Charges
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div class="price-card--cta">
+          {/* <div class="price-card--cta">
             <a class="price-card--cta--button btn" href="/">
               Get Started
             </a>
-          </div>
+          </div> */}
 
           <div class="price-card--features">
             <ul class="price-card--features--list">
@@ -120,11 +122,11 @@ const Pricing = () => {
             <h4>ITS</h4>
             <p>Integrated Test Series</p>
           </div>
-          <div class="price-card--hero-text">Most Popular</div>
+          <div class="price-card--hero-text">With Performance Analysis</div>
 
-          <div class="price-card--price">
+          {/* <div class="price-card--price">
             <div class="price-card--price-text">
-              <div class="price-card--price-number odometer">3000</div>
+              <div class="price-card--price-number-y odometer">80</div>
             </div>
             <div class="price-card--price-conditions">
               <div
@@ -135,13 +137,13 @@ const Pricing = () => {
               </div>
               <div class="price-card--onboarding-fee">No Hidden Charges</div>
             </div>
-          </div>
+          </div> */}
 
-          <div class="price-card--cta">
+          {/* <div class="price-card--cta">
             <a class="price-card--cta--button btn" href="/">
               Get Started
             </a>
-          </div>
+          </div> */}
 
           <div class="price-card--features">
             <ul class="price-card--features--list">
@@ -213,6 +215,16 @@ const Pricing = () => {
           </div>
         </div>
       </div>
+      <Box m={3}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          href="https://gepton.typeform.com/to/fWvvt0mU"
+        >
+          ENROLL NOW
+        </Button>
+      </Box>
     </section>
   );
 };
