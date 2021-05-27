@@ -9,6 +9,7 @@ const Pricing = () => {
             <h4>MGP</h4>
             <p>Mentorship & Guidance Program</p>
           </div>
+          <div class="price-card--hero-text">With Progress Tracking</div>
 
           {/* <div class="price-card--price">
             <div class="price-card--price-text">
@@ -117,7 +118,7 @@ const Pricing = () => {
           </div>
         </div>
         {/* ITS */}
-        <div class="price-card price-card--hero">
+        <div class="price-card">
           <div class="price-card--header">
             <h4>ITS</h4>
             <p>Integrated Test Series</p>
